@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
+import com.greenchat.compose.LoginScreen
 
 class LoginFragment : BaseFragment() {
 
@@ -15,7 +16,9 @@ class LoginFragment : BaseFragment() {
     ): View? {
         return ComposeView(requireContext()).apply {
             setContent {
+                LoginScreen {
 
+                }
             }
         }
     }
