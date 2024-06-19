@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
@@ -125,7 +126,7 @@ fun PermissionItems(openDashboard: () -> Unit) {
                 onClick = openDashboard,
                 modifier = Modifier
                     .padding(top = 5.dp, bottom = 15.dp)
-                    .fillMaxWidth(),
+                    .fillMaxWidth().height(55.dp),
                 shape = RoundedCornerShape(16.dp),
                 colors = ButtonDefaults.buttonColors(colorPrimary),
             ) {
@@ -133,7 +134,7 @@ fun PermissionItems(openDashboard: () -> Unit) {
                     modifier = Modifier.padding(top = 8.dp, bottom = 8.dp),
                     text = "Allow all",
                     color = Color.White,
-                    style = MaterialTheme.typography.labelLarge,
+                    style = MaterialTheme.typography.titleSmall.copy(fontSize = 17.sp),
                 )
             }
         }
