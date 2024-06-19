@@ -2,11 +2,19 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/nav_login">
+    app:startDestination="@id/nav_permission">
+
+    <fragment
+        android:id="@+id/nav_permission"
+        android:name="com.greenchat.fragment.PermissionFragment"
+        android:label="Permission">
+    </fragment>
 
     <fragment
         android:id="@+id/nav_login"
         android:name="com.greenchat.fragment.LoginFragment"
         android:label="Login" />
+
+
 
 </navigation>
