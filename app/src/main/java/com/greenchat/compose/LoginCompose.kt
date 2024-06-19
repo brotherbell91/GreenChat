@@ -290,19 +290,21 @@ fun LoginHeaderView() {
         modifier = Modifier.padding(bottom = 40.dp)
     ) {
         Image(
-            modifier = Modifier.width(80.dp),
-            bitmap = ImageBitmap.imageResource(id = R.drawable.greenchat_logo_nl_white),
+            modifier = Modifier
+                .width(200.dp)
+                .padding(top = 40.dp),
+            bitmap = ImageBitmap.imageResource(id = R.drawable.greenchat_logo_white),
             contentDescription = "header_view_flower_logo"
         )
-        Text(
-            text = "GreenChat",
-            color = Color.White,
-            style = TextStyle(
-                fontSize = 40.sp,
-                fontFamily = FontFamily(Font(R.font.josefin_sans_semibold_italic)),
-                letterSpacing = 2.sp
-            )
-        )
+//        Text(
+//            text = "GreenChat",
+//            color = Color.White,
+//            style = TextStyle(
+//                fontSize = 40.sp,
+//                fontFamily = FontFamily(Font(R.font.josefin_sans_semibold_italic)),
+//                letterSpacing = 2.sp
+//            )
+//        )
     }
 }
 
