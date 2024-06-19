@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -182,7 +183,7 @@ fun CustomTopAppBar() {
         title = {
             Box(modifier = Modifier.fillMaxWidth()) {
                 Text(
-                    text = "UCWORKS",
+                    text = stringResource(id = R.string.app_name),
                     modifier = Modifier.align(Alignment.Center),
                     color = Color.White,
                     style = TextStyle(
