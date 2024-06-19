@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
+import androidx.navigation.findNavController
+import com.greenchat.R
 import com.greenchat.compose.LoginScreen
 
 class LoginFragment : BaseFragment() {
@@ -17,7 +19,7 @@ class LoginFragment : BaseFragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 LoginScreen {
-
+                    findNavController().navigate(R.id.nav_main)
                 }
             }
         }
