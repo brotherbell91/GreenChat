@@ -9,6 +9,9 @@ data class DepartmentData(
         //organization test data
         val organizationDepartment = DepartmentData(
             name = "GreenChat",
+            employees = listOf(
+                EmployeeData(name = "Green", position = "CEO"),
+            ),
             subDepartments = listOf(
                 DepartmentData(
                     name = "Engineering",
@@ -75,6 +78,9 @@ data class DepartmentData(
                     subDepartments = listOf(
                         DepartmentData(
                             name = "SAMSUNG 1TEAM",
+                            employees = listOf(
+                                EmployeeData(name = "1TEAM MASTER", position = "Backend Developer"),
+                            ),
                             subDepartments = listOf(
                                 DepartmentData(
                                     name = "CLIENT 1TEAM",
