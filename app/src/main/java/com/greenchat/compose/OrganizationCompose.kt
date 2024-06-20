@@ -36,7 +36,9 @@ fun OrganizationScreen() {
             contentColor = ghost_white
         ) {
             Column(
-                modifier = Modifier.fillMaxHeight().padding(top = 30.dp),
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .padding(top = 30.dp),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -80,7 +82,7 @@ fun OrganizationScreen() {
             .weight(1f)
             .fillMaxSize()) {
             when (selectedIndex.value) {
-                0 -> {}
+                0 -> BuddyScreen(department = DepartmentData.organizationBuddy)
                 1 -> DepartmentScreen(department = DepartmentData.organizationDepartment)
             }
         }

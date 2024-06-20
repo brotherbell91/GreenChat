@@ -8,7 +8,7 @@ data class DepartmentData(
     companion object{
         //organization test data
         val organizationDepartment = DepartmentData(
-            name = "UCWARE",
+            name = "GreenChat",
             subDepartments = listOf(
                 DepartmentData(
                     name = "Engineering",
@@ -48,20 +48,43 @@ data class DepartmentData(
                 DepartmentData(
                     name = "AUMC",
                     employees = listOf(
-                        EmployeeData(name = "Dev1", position = "Developer"),
-                        EmployeeData(name = "Dev2", position = "Developer")
+                        EmployeeData(name = "Dev1", position = "AOS Developer"),
+                        EmployeeData(name = "Dev2", position = "Backend Developer"),
+                        EmployeeData(name = "Dev3", position = "Frontend Developer"),
                     ),
                     subDepartments = listOf(
                         DepartmentData(
                             name = "AUMC 1TEAM",
                             employees = listOf(
-                                EmployeeData(name = "Dev1", position = "Backend Developer")
+                                EmployeeData(name = "Dev1", position = "Backend Developer"),
+                                EmployeeData(name = "Dev2", position = "Backend Developer"),
                             )
                         ),
                         DepartmentData(
                             name = "AUMC 2TEAM",
                             employees = listOf(
-                                EmployeeData(name = "Dev2", position = "Frontend Developer")
+                                EmployeeData(name = "Dev1", position = "Frontend Developer"),
+                                EmployeeData(name = "Dev2", position = "Frontend Developer"),
+
+                            )
+                        )
+                    )
+                ),
+                DepartmentData(
+                    name = "SAMSUNG",
+                    subDepartments = listOf(
+                        DepartmentData(
+                            name = "SAMSUNG 1TEAM",
+                            subDepartments = listOf(
+                                DepartmentData(
+                                    name = "CLIENT 1TEAM",
+                                    employees = listOf(
+                                        EmployeeData(name = "Dev1", position = "PC Developer"),
+                                        EmployeeData(name = "Dev2", position = "Frontend Developer"),
+                                        EmployeeData(name = "Dev3", position = "AOS Developer"),
+                                        EmployeeData(name = "Dev4", position = "IOS Developer"),
+                                    )
+                                )
                             )
                         )
                     )
@@ -69,18 +92,8 @@ data class DepartmentData(
                 DepartmentData(
                     name = "HANTA",
                     employees = listOf(
-                        EmployeeData(name = "Dev1", position = "UX Designer"),
-                        EmployeeData(name = "Dev2", position = "UX Designer"),
-                        EmployeeData(name = "Dev3", position = "UX Designer"),
-                        EmployeeData(name = "Dev4", position = "UX Designer"),
-
                         )
                 ),
-                DepartmentData(
-                    name = "KOREA",
-                    employees = listOf(
-                    )
-                )
             )
         )
     }
