@@ -21,6 +21,7 @@ import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.greenchat.R
+import com.greenchat.data.DepartmentData
 import com.greenchat.ui.ghost_white
 
 @Composable
@@ -80,7 +81,7 @@ fun OrganizationScreen() {
             .fillMaxSize()) {
             when (selectedIndex.value) {
                 0 -> {}
-                1 -> {}
+                1 -> DepartmentScreen(department = DepartmentData.organizationDepartment)
             }
         }
     }
