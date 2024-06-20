@@ -59,7 +59,7 @@ fun MainScreen() {
                     ) {
                         Box {
                             when (selectedIndex.value) {
-                                0 -> {} //조직
+                                0 -> OrganizationScreen() //조직
                                 1 -> {} //채팅리스트
                                 2 -> {} //쪽지리스트
                                 3 -> {} //더보기
