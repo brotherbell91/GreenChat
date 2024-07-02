@@ -32,6 +32,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
@@ -41,6 +42,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.substring
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -163,13 +165,24 @@ fun MessageCard(message: MessageListData) {
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
+                    var text = if (message.messageSender != "이형종"){
+                        message.messageSender
+                    } else{
+                        message.messageReceiver
+                    }
+
+                    val textLength = text.length
+                    if(textLength > 16){
+                        text = text.substring(0, 16) + "..."
+                    }
                     Text(
-                        text = message.messageSender,
+                        text = text,
                         fontWeight = FontWeight.Bold,
                         fontSize = 18.sp,
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        overflow = TextOverflow.Ellipsis,
                     )
+
                     Text(
                         text = "${message.receiverCount}",
                         fontSize = 14.sp,
@@ -204,11 +217,14 @@ fun MessageCard(message: MessageListData) {
                                 .background(Color.Red, shape = CircleShape),
                             contentAlignment = Alignment.Center
                         ) {
-                            Text(
-                                text = message.unread.toString(),
-                                color = Color.White,
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 12.sp
+                            Image(
+                                painter = painterResource(id = R.drawable.message),
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .size(17.dp)
+                                    .clip(CircleShape)
+                                    .align(Alignment.Center),
+                                colorFilter = ColorFilter.tint(Color.White)
                             )
                         }
                     } else{
