@@ -221,7 +221,7 @@ fun MessageCard(message: MessageListData) {
                                 painter = painterResource(id = R.drawable.message),
                                 contentDescription = null,
                                 modifier = Modifier
-                                    .size(17.dp)
+                                    .size(13.dp)
                                     .clip(CircleShape)
                                     .align(Alignment.Center),
                                 colorFilter = ColorFilter.tint(Color.White)
