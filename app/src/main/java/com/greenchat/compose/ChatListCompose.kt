@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -31,7 +30,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -47,14 +45,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.greenchat.R
-import com.greenchat.data.ChatRoomData
+import com.greenchat.data.ChatRoomListData
 import com.greenchat.ui.colorPrimary
 import com.greenchat.ui.ghost_white
 import com.greenchat.ui.image_gray
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.util.Locale
 
 @Composable
 fun ChatListScreen() {
@@ -62,9 +56,9 @@ fun ChatListScreen() {
     var selectedTab = remember { mutableStateOf(0) }
 
     val chatRooms = if (selectedTab.value == 0) {
-        ChatRoomData.chatRooms
+        ChatRoomListData.chatRooms
     } else {
-        ChatRoomData.openChatRooms
+        ChatRoomListData.openChatRooms
     }
 
     Column(
@@ -122,7 +116,7 @@ fun ChatListScreen() {
 }
 
 @Composable
-fun ChatRoomList(chatRooms: List<ChatRoomData>) {
+fun ChatRoomList(chatRooms: List<ChatRoomListData>) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -136,7 +130,7 @@ fun ChatRoomList(chatRooms: List<ChatRoomData>) {
 }
 
 @Composable
-fun ChatRoomCard(chatRoom: ChatRoomData) {
+fun ChatRoomCard(chatRoom: ChatRoomListData) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
