@@ -26,10 +26,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.greenchat.MainActivity
 import com.greenchat.R
+import com.greenchat.fragment.MessageFragment
 import com.greenchat.ui.colorPrimary
 import com.greenchat.ui.ghost_white
 import com.greenchat.ui.image_gray
@@ -38,6 +41,7 @@ import com.greenchat.ui.image_gray
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen() {
+    val activity = LocalContext.current as? MainActivity
     val selectedIndex = remember { mutableStateOf(0) }
     Surface(modifier = Modifier.fillMaxSize()) {
         Scaffold(
@@ -61,7 +65,7 @@ fun MainScreen() {
                             when (selectedIndex.value) {
                                 0 -> OrganizationScreen() //조직
                                 1 -> ChatListScreen() //채팅리스트
-                                2 -> MessageListScreen() //쪽지리스트
+                                2 -> MessageListScreen(){(activity as MainActivity).showTopFragment(MessageFragment(), "MessageFragment")} //쪽지리스트
                                 3 -> {} //더보기
                             }
                         }

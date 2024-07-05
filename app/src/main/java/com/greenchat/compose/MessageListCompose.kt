@@ -42,7 +42,6 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.text.substring
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -53,7 +52,7 @@ import com.greenchat.ui.ghost_white
 import com.greenchat.ui.image_gray
 
 @Composable
-fun MessageListScreen() {
+fun MessageListScreen(openDashboard: () -> Unit) {
     val tabs = listOf("ReceiveMessage", "SendMessage")
     var selectedTab = remember { mutableStateOf(0) }
 
@@ -113,31 +112,31 @@ fun MessageListScreen() {
             }
         }
         Spacer(modifier = Modifier.height(8.dp))
-        MessageList(messages)
+        MessageList(openDashboard, messages)
     }
 }
 
 @Composable
-fun MessageList(messages: List<MessageListData>) {
+fun MessageList(openDashboard: () -> Unit, messages: List<MessageListData>) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         item{
             messages.forEach { messages ->
-                MessageCard(message = messages)
+                MessageCard(openDashboard, message = messages)
             }
         }
     }
 }
 
 @Composable
-fun MessageCard(message: MessageListData) {
+fun MessageCard(openDashboard: () -> Unit, message: MessageListData) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(6.dp)
-            .clickable { /* 클릭 시 동작 */ },
+            .clickable { openDashboard() },
         elevation = CardDefaults.cardElevation(4.dp),
         colors = CardDefaults.cardColors(Color.White),
         shape = RoundedCornerShape(16.dp),
@@ -249,5 +248,5 @@ fun MessageCard(message: MessageListData) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewMessageListScreen() {
-    MessageListScreen()
+    MessageListScreen(openDashboard = {})
 }

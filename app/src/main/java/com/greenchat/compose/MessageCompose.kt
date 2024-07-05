@@ -1,6 +1,7 @@
 package com.greenchat.compose
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.greenchat.data.MessageData
+import com.greenchat.ui.ghost_white
 import java.time.format.DateTimeFormatter
 
 @Composable
@@ -24,7 +26,7 @@ fun MessageScreen(messageData : MessageData) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .background(ghost_white)
     ) {
         Image(
             painter = painterResource(id = messageData.imageRes),
