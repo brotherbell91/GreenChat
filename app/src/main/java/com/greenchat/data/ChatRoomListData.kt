@@ -6,7 +6,7 @@ import java.time.LocalDateTime
 data class ChatRoomListData(
     var id: Int = -1,
     var imageRes: Int = -1,
-    var roomName: String = "",
+    var name: String = "",
     var participantsCount: Int = -1,
     var lastChatTime: LocalDateTime = LocalDateTime.now(),
     var lastChat: String = "",

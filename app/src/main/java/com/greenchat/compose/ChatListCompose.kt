@@ -164,7 +164,7 @@ fun ChatRoomCard(chatRoom: ChatRoomListData) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = chatRoom.roomName,
+                        text = chatRoom.name,
                         fontWeight = FontWeight.Bold,
                         fontSize = 18.sp,
                         maxLines = 1,
