@@ -232,5 +232,5 @@ fun ChatRoomCard(openDashboard: (ChatRoomListData, Int) -> Unit, chatRoom: ChatR
 @Preview(showBackground = true)
 @Composable
 fun PreviewChatListScreen() {
-    ChatListScreen()
+    ChatListScreen(openDashboard = { _, _ -> })
 }
