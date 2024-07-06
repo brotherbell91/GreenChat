@@ -162,10 +162,10 @@ fun MessageCard(openDashboard: (MessageListData, Int) -> Unit, message: MessageL
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    var text = if (message.messageSender != "이형종"){
-                        message.messageSender
+                    var text = if (selectedTab == 0){
+                        message.sender
                     } else{
-                        message.messageReceiver
+                        message.receiver
                     }
 
                     val textLength = text.length
