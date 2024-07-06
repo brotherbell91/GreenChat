@@ -199,5 +199,5 @@ fun MessageScreen(messageData: MessageData) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewMessageScreen() {
-    MessageScreen(MessageData.receiveMessage)
+    MessageScreen(MessageData.receiveMessage[0])
 }
