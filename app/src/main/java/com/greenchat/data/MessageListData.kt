@@ -1,8 +1,11 @@
 package com.greenchat.data
 
+import android.os.Parcelable
 import com.greenchat.R
+import kotlinx.parcelize.Parcelize
 import java.time.LocalDateTime
 
+@Parcelize
 data class MessageListData(
     var id: Int = -1,
     var imageRes: Int = -1,
@@ -12,7 +15,7 @@ data class MessageListData(
     var messageSender: String = "",
     var messageReceiver: String = "",
     var unread: Int = -1,
-) {
+) : Parcelable  {
     companion object{
         val receiveMessages = listOf(
             MessageListData(1, R.drawable.profile, "Receive Message 1", 3, LocalDateTime.now(), "홍길동", "이형종, 김동범, 오수빈", 1),

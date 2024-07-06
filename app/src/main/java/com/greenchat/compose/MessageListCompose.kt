@@ -52,7 +52,7 @@ import com.greenchat.ui.ghost_white
 import com.greenchat.ui.image_gray
 
 @Composable
-fun MessageListScreen(openDashboard: () -> Unit) {
+fun MessageListScreen(openDashboard: (MessageListData, Int) -> Unit) {
     val tabs = listOf("ReceiveMessage", "SendMessage")
     var selectedTab = remember { mutableStateOf(0) }
 
@@ -112,31 +112,29 @@ fun MessageListScreen(openDashboard: () -> Unit) {
             }
         }
         Spacer(modifier = Modifier.height(8.dp))
-        MessageList(openDashboard, messages)
+        MessageList(openDashboard, messages, selectedTab.value)
     }
 }
 
 @Composable
-fun MessageList(openDashboard: () -> Unit, messages: List<MessageListData>) {
+fun MessageList(openDashboard: (MessageListData, Int) -> Unit, messages: List<MessageListData>, selectedTab: Int) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        item{
-            messages.forEach { messages ->
-                MessageCard(openDashboard, message = messages)
-            }
+        items(messages) { message ->
+            MessageCard(openDashboard, message = message, selectedTab)
         }
     }
 }
 
 @Composable
-fun MessageCard(openDashboard: () -> Unit, message: MessageListData) {
+fun MessageCard(openDashboard: (MessageListData, Int) -> Unit, message: MessageListData, selectedTab: Int) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(6.dp)
-            .clickable { openDashboard() },
+            .clickable {openDashboard(message, selectedTab)},
         elevation = CardDefaults.cardElevation(4.dp),
         colors = CardDefaults.cardColors(Color.White),
         shape = RoundedCornerShape(16.dp),

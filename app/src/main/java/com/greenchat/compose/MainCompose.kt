@@ -65,7 +65,11 @@ fun MainScreen() {
                             when (selectedIndex.value) {
                                 0 -> OrganizationScreen() //조직
                                 1 -> ChatListScreen() //채팅리스트
-                                2 -> MessageListScreen(){(activity as MainActivity).showTopFragment(MessageFragment(), "MessageFragment")} //쪽지리스트
+                                2 -> MessageListScreen() { message, type ->
+                                    (activity as MainActivity).showTopFragment(
+                                        MessageFragment.newInstance(message, type),
+                                        "MessageFragment"
+                                    )}
                                 3 -> {} //더보기
                             }
                         }
