@@ -9,11 +9,11 @@ import java.time.LocalDateTime
 data class MessageListData(
     var id: Int = -1,
     var imageRes: Int = -1,
-    var messageName: String = "",
+    var name: String = "",
     var receiverCount: Int = -1,
-    var messageTime: LocalDateTime = LocalDateTime.now(),
-    var messageSender: String = "",
-    var messageReceiver: String = "",
+    var time: LocalDateTime = LocalDateTime.now(),
+    var sender: String = "",
+    var receiver: String = "",
     var unread: Int = -1,
 ) : Parcelable  {
     companion object{
