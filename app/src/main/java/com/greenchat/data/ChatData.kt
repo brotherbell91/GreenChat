@@ -9,8 +9,4 @@ data class ChatData(
     var unreadCount: Int = -1,
     var time: LocalDateTime = LocalDateTime.now(),
     var content: String = "",
-) {
-    companion object{
-
-    }
-}
+)
