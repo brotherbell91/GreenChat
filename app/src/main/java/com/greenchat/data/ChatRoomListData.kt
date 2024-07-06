@@ -8,8 +8,8 @@ data class ChatRoomListData(
     var imageRes: Int = -1,
     var roomName: String = "",
     var participantsCount: Int = -1,
-    var lastMessageTime: LocalDateTime = LocalDateTime.now(),
-    var lastMessage: String = "",
+    var lastChatTime: LocalDateTime = LocalDateTime.now(),
+    var lastChat: String = "",
     var unreadCount: Int = -1,
 ){
     companion object{

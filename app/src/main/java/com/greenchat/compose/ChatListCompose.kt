@@ -181,7 +181,7 @@ fun ChatRoomCard(chatRoom: ChatRoomListData) {
                     )
                 }
                 Text(
-                    text = "${chatRoom.lastMessage}",
+                    text = "${chatRoom.lastChat}",
                     fontSize = 14.sp,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
@@ -221,7 +221,7 @@ fun ChatRoomCard(chatRoom: ChatRoomListData) {
                 }
 
                 Text(
-                    text = todayCheck(chatRoom.lastMessageTime),
+                    text = todayCheck(chatRoom.lastChatTime),
                     fontSize = 12.sp,
                     color = Color.Gray
                 )
