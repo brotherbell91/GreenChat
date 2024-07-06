@@ -1,8 +1,11 @@
 package com.greenchat.data
 
+import android.os.Parcelable
 import com.greenchat.R
+import kotlinx.parcelize.Parcelize
 import java.time.LocalDateTime
 
+@Parcelize
 data class ChatRoomListData(
     var id: Int = -1,
     var imageRes: Int = -1,
@@ -11,7 +14,7 @@ data class ChatRoomListData(
     var lastChatTime: LocalDateTime = LocalDateTime.now(),
     var lastChat: String = "",
     var unreadCount: Int = -1,
-){
+) : Parcelable {
     companion object{
         val chatRooms = listOf(
             ChatRoomListData(1, R.drawable.profile, "Chat Room 1", 10, LocalDateTime.now(), "Last message 1", 2),

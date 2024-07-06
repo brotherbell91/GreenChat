@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -51,7 +52,7 @@ import com.greenchat.ui.ghost_white
 import com.greenchat.ui.image_gray
 
 @Composable
-fun ChatListScreen() {
+fun ChatListScreen(openDashboard: (ChatRoomListData, Int) -> Unit) {
     val tabs = listOf("Chat", "OpenChat")
     var selectedTab = remember { mutableStateOf(0) }
 
@@ -111,31 +112,29 @@ fun ChatListScreen() {
             }
         }
         Spacer(modifier = Modifier.height(8.dp))
-        ChatRoomList(chatRooms)
+        ChatRoomList(openDashboard, chatRooms, selectedTab.value)
     }
 }
 
 @Composable
-fun ChatRoomList(chatRooms: List<ChatRoomListData>) {
+fun ChatRoomList(openDashboard: (ChatRoomListData, Int) -> Unit, chatRooms: List<ChatRoomListData>, selectedTab: Int) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        item{
-            chatRooms.forEach { chatRoom ->
-                ChatRoomCard(chatRoom = chatRoom)
-            }
+        items(chatRooms) { chatRoom ->
+            ChatRoomCard(openDashboard, chatRoom = chatRoom, selectedTab)
         }
     }
 }
 
 @Composable
-fun ChatRoomCard(chatRoom: ChatRoomListData) {
+fun ChatRoomCard(openDashboard: (ChatRoomListData, Int) -> Unit, chatRoom: ChatRoomListData, selectedTab: Int) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(6.dp)
-            .clickable { /* 클릭 시 동작 */ },
+            .clickable {openDashboard(chatRoom, selectedTab)},
         elevation = CardDefaults.cardElevation(4.dp),
         colors = CardDefaults.cardColors(Color.White),
         shape = RoundedCornerShape(16.dp),

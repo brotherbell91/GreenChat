@@ -32,6 +32,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.greenchat.MainActivity
 import com.greenchat.R
+import com.greenchat.fragment.ChatRoomFragment
 import com.greenchat.fragment.MessageFragment
 import com.greenchat.ui.colorPrimary
 import com.greenchat.ui.ghost_white
@@ -64,12 +65,16 @@ fun MainScreen() {
                         Box {
                             when (selectedIndex.value) {
                                 0 -> OrganizationScreen() //조직
-                                1 -> ChatListScreen() //채팅리스트
-                                2 -> MessageListScreen() { message, type ->
+                                1 -> ChatListScreen() { chatRoom, selectedTab ->
                                     (activity as MainActivity).showTopFragment(
-                                        MessageFragment.newInstance(message, type),
+                                        ChatRoomFragment.newInstance(chatRoom, selectedTab),
+                                        "ChatRoomFragment"
+                                    )}//채팅방 리스트
+                                2 -> MessageListScreen() { message, selectedTab ->
+                                    (activity as MainActivity).showTopFragment(
+                                        MessageFragment.newInstance(message, selectedTab),
                                         "MessageFragment"
-                                    )}
+                                    )}//메시지 리스트
                                 3 -> {} //더보기
                             }
                         }
