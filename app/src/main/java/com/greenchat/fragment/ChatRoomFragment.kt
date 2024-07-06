@@ -6,8 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
+import com.greenchat.compose.ChatRoomScreen
+import com.greenchat.data.ChatRoomData
 import com.greenchat.data.ChatRoomListData
-
 
 class ChatRoomFragment : Fragment() {
 
@@ -35,10 +36,32 @@ class ChatRoomFragment : Fragment() {
             setContent {
                 val chatRoomListData = arguments?.getParcelable(ARG_CHATROOM) as? ChatRoomListData
                 val chatRoomType = arguments?.getInt(ChatRoomFragment.ARG_TYPE)
-                val chatRooms = if (chatRoomType == 0) ChatRoomListData.chatRooms else ChatRoomListData.openChatRooms
+                val chatRooms = if (chatRoomType == 0) ChatRoomData.chat else ChatRoomData.openChat
 
-
+                chatRoomListData?.let { listData ->
+                    val chatRoomData = findChatRoomDataById(chatRooms, listData.id)
+                    chatRoomData?.let {
+                        ChatRoomScreen(chatRoomData = it)
+                    }
+                }
             }
         }
+    }
+
+    private fun findChatRoomDataById(chatRooms: List<ChatRoomData>, id: Int): ChatRoomData? {
+        var low = 0
+        var high = chatRooms.size - 1
+
+        while (low <= high) {
+            val mid = (low + high) / 2
+            val midVal = chatRooms[mid]
+
+            when {
+                midVal.id < id -> low = mid + 1
+                midVal.id > id -> high = mid - 1
+                else -> return midVal
+            }
+        }
+        return null
     }
 }
