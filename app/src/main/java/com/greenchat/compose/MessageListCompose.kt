@@ -193,7 +193,7 @@ fun MessageCard(openDashboard: () -> Unit, message: MessageListData) {
                     )
                 }
                 Text(
-                    text = "${message.messageName}",
+                    text = "${message.name}",
                     fontSize = 14.sp,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
@@ -236,7 +236,7 @@ fun MessageCard(openDashboard: () -> Unit, message: MessageListData) {
                 }
 
                 Text(
-                    text = todayCheck(message.messageTime),
+                    text = todayCheck(message.time),
                     fontSize = 12.sp,
                     color = Color.Gray
                 )

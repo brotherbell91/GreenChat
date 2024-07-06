@@ -94,7 +94,7 @@ fun MessageScreen(messageData: MessageData) {
                                                             )
                                                         )
                                                         Text(
-                                                            text = messageData.messageSender,
+                                                            text = messageData.sender,
                                                             style = MaterialTheme.typography.bodyLarge.copy(
                                                                 fontWeight = FontWeight.Bold,
                                                                 fontSize = 16.sp,
@@ -112,7 +112,7 @@ fun MessageScreen(messageData: MessageData) {
                                                             )
                                                         )
                                                         Text(
-                                                            text = messageData.messageReceiver,
+                                                            text = messageData.receiver,
                                                             style = MaterialTheme.typography.bodyLarge.copy(
                                                                 fontWeight = FontWeight.Bold,
                                                                 fontSize = 16.sp,
@@ -130,7 +130,7 @@ fun MessageScreen(messageData: MessageData) {
                                                             )
                                                         )
                                                         Text(
-                                                            text = messageData.messageTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
+                                                            text = messageData.time.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
                                                             style = MaterialTheme.typography.bodySmall.copy(
                                                                 fontWeight = FontWeight.Bold,
                                                                 fontSize = 14.sp,
@@ -152,7 +152,7 @@ fun MessageScreen(messageData: MessageData) {
                                                     ),
                                                 )
                                                 Text(
-                                                    text = messageData.messageName,
+                                                    text = messageData.name,
                                                     style = MaterialTheme.typography.bodyMedium.copy(
                                                         fontWeight = FontWeight.Bold,
                                                         fontSize = 18.sp,

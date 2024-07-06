@@ -6,11 +6,12 @@ import java.time.LocalDateTime
 data class MessageData(
     var id: Int = -1,
     var imageRes: Int = -1,
-    var messageName: String = "",
+    var name: String = "",
     var receiverCount: Int = -1,
-    var messageTime: LocalDateTime = LocalDateTime.now(),
-    var messageSender: String = "",
-    var messageReceiver: String = "",
+    var time: LocalDateTime = LocalDateTime.now(),
+    var sender: String = "",
+    var receiver: String = "",
+    var content: String = "",
 ) {
     companion object{
         val receiveMessage = MessageData(1, R.drawable.profile, "Receive Message 1", 3, LocalDateTime.now(), "홍길동", "이형종, 김동범, 오수빈")
