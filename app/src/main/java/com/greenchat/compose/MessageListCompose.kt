@@ -246,5 +246,5 @@ fun MessageCard(openDashboard: (MessageListData, Int) -> Unit, message: MessageL
 @Preview(showBackground = true)
 @Composable
 fun PreviewMessageListScreen() {
-    MessageListScreen(openDashboard = {})
+    MessageListScreen(openDashboard = { _, _ -> })
 }
