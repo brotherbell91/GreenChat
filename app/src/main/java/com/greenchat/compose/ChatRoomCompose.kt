@@ -45,7 +45,7 @@ import java.time.format.DateTimeFormatter
 fun ChatRoomScreen(chatRoomData : ChatRoomData) {
     Surface(modifier = Modifier.fillMaxSize()) {
         Scaffold(
-            topBar = { CustomTopAppBar() },
+            topBar = { CustomTopAppBar(true) },
             content = { paddingValues ->
                 Surface(
                     modifier = Modifier

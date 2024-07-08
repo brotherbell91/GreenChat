@@ -54,7 +54,7 @@ import com.greenchat.ui.ghost_white
 fun PermissionScreen(openDashboard: () -> Unit) {
     Surface(modifier = Modifier.fillMaxSize()) {
         Scaffold(
-            topBar = {CustomTopAppBar()},
+            topBar = {CustomTopAppBar(false)},
             content = { paddingValues ->
                 Surface(
                     modifier = Modifier
@@ -174,40 +174,6 @@ fun PermissionItem(permission: PermissionData) {
             }
         }
     }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun CustomTopAppBar() {
-    TopAppBar(
-        modifier = Modifier.fillMaxWidth(),
-        title = {
-            Box(modifier = Modifier.fillMaxWidth()) {
-                Text(
-                    text = stringResource(id = R.string.app_name),
-                    modifier = Modifier.align(Alignment.Center),
-                    color = Color.White,
-                    style = TextStyle(
-                        fontStyle = FontStyle.Italic,
-                        fontFamily = FontFamily(Font((R.font.josefin_sans_semibold_italic))),
-                        fontSize = 22.sp
-                    )
-                )
-                IconButton(
-                    modifier = Modifier.align(Alignment.CenterEnd),
-                    onClick = { }
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_search),
-                        contentDescription = "dashboard_search"
-                    )
-                }
-            }
-        },
-        colors = TopAppBarDefaults.smallTopAppBarColors(
-            containerColor = colorPrimary,
-        )
-    )
 }
 
 @Preview(showBackground = true)

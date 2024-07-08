@@ -47,7 +47,7 @@ fun MainScreen() {
     Surface(modifier = Modifier.fillMaxSize()) {
         Scaffold(
             topBar = {
-                CustomTopAppBar()
+                CustomTopAppBar(false)
             },
             content = { paddingValues ->
                 Surface(
