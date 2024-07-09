@@ -37,6 +37,7 @@ import com.greenchat.fragment.MessageFragment
 import com.greenchat.ui.colorPrimary
 import com.greenchat.ui.ghost_white
 import com.greenchat.ui.image_gray
+import com.greenchat.util.Constants
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -66,14 +67,14 @@ fun MainScreen() {
                             when (selectedIndex.value) {
                                 0 -> OrganizationScreen() //조직
                                 1 -> ChatListScreen() { chatRoom, selectedTab ->
-                                    (activity as MainActivity).showTopFragment(
+                                    (activity as MainActivity).addTopFragment(
                                         ChatRoomFragment.newInstance(chatRoom, selectedTab),
-                                        "ChatRoomFragment"
+                                        Constants.CHATROOM_FRAGMENT_TAG
                                     )}//채팅방 리스트
                                 2 -> MessageListScreen() { message, selectedTab ->
-                                    (activity as MainActivity).showTopFragment(
+                                    (activity as MainActivity).addTopFragment(
                                         MessageFragment.newInstance(message, selectedTab),
-                                        "MessageFragment"
+                                        Constants.MESSAGE_FRAGMENT_TAG
                                     )}//메시지 리스트
                                 3 -> {} //더보기
                             }

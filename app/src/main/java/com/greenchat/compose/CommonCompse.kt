@@ -33,7 +33,7 @@ import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CustomTopAppBar(backButton : Boolean) {
+fun CustomTopAppBar(backButton : Boolean, tag: String? = null) {
     val activity = LocalContext.current as? MainActivity
     TopAppBar(
         modifier = Modifier.fillMaxWidth(),
@@ -42,7 +42,7 @@ fun CustomTopAppBar(backButton : Boolean) {
                 if(backButton){
                     IconButton(
                         modifier = Modifier.align(Alignment.CenterStart),
-                        onClick = {(activity as MainActivity).hideTopFragment()}
+                        onClick = {(activity as MainActivity).removeTopFragment(tag)}
                     ) {
                         Image(
                             painter = painterResource(id = R.drawable.baseline_arrow_back_24),

@@ -38,6 +38,7 @@ import com.greenchat.data.ChatData
 import com.greenchat.data.ChatRoomData
 import com.greenchat.ui.colorPrimary
 import com.greenchat.ui.ghost_white
+import com.greenchat.util.Constants
 import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -45,7 +46,7 @@ import java.time.format.DateTimeFormatter
 fun ChatRoomScreen(chatRoomData : ChatRoomData) {
     Surface(modifier = Modifier.fillMaxSize()) {
         Scaffold(
-            topBar = { CustomTopAppBar(true) },
+            topBar = { CustomTopAppBar(true, Constants.CHATROOM_FRAGMENT_TAG) },
             content = { paddingValues ->
                 Surface(
                     modifier = Modifier

@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.sp
 import com.greenchat.data.MessageData
 import com.greenchat.ui.colorPrimary
 import com.greenchat.ui.ghost_white
+import com.greenchat.util.Constants
 import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -43,7 +44,7 @@ import java.time.format.DateTimeFormatter
 fun MessageScreen(messageData: MessageData) {
     Surface(modifier = Modifier.fillMaxSize()) {
         Scaffold(
-            topBar = { CustomTopAppBar(true) },
+            topBar = { CustomTopAppBar(true, Constants.MESSAGE_FRAGMENT_TAG) },
             content = { paddingValues ->
                 Surface(
                     modifier = Modifier

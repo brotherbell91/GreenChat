@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.view.WindowCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -34,15 +35,18 @@ class MainActivity : AppCompatActivity() {
         return navHostFragment.navController
     }
 
-    fun showTopFragment(fragment: Fragment, tag: String? = null) {
+    fun addTopFragment(fragment: Fragment, tag: String? = null) {
         supportFragmentManager.beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-            .add(R.id.nav_host_fragment, fragment, tag)
-            .addToBackStack(null)
+            .add(R.id.first_fragment_container, fragment, tag)
+            .addToBackStack(tag)
             .commit()
     }
 
-    fun hideTopFragment() {
-        supportFragmentManager.popBackStack()
+    fun removeTopFragment(tag: String? = null) {
+        supportFragmentManager.beginTransaction().remove(
+            supportFragmentManager.findFragmentById(R.id.first_fragment_container)!!
+        ).commitNow()
+        supportFragmentManager.popBackStackImmediate(tag, FragmentManager.POP_BACK_STACK_INCLUSIVE)
     }
 }
