@@ -35,7 +35,7 @@ import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CustomTopAppBar(backButton : Boolean, tag: String? = null) {
+fun CustomTopAppBar(backButton : Boolean, tag: String? = null, title: String? = null) {
     val activity = LocalContext.current as? MainActivity
     TopAppBar(
         modifier = Modifier.fillMaxWidth(),
@@ -55,7 +55,7 @@ fun CustomTopAppBar(backButton : Boolean, tag: String? = null) {
                     }
                 }
                 Text(
-                    text = stringResource(id = R.string.app_name),
+                    text = title ?: stringResource(id = R.string.app_name),
                     modifier = Modifier.align(Alignment.Center),
                     color = Color.White,
                     style = TextStyle(

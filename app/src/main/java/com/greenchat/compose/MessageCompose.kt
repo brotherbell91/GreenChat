@@ -44,7 +44,7 @@ import java.time.format.DateTimeFormatter
 fun MessageScreen(messageData: MessageData) {
     Surface(modifier = Modifier.fillMaxSize()) {
         Scaffold(
-            topBar = { CustomTopAppBar(true, Constants.MESSAGE_FRAGMENT_TAG) },
+            topBar = { CustomTopAppBar(true, Constants.MESSAGE_FRAGMENT_TAG, messageData.name) },
             content = { paddingValues ->
                 Surface(
                     modifier = Modifier
