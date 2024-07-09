@@ -40,6 +40,7 @@ import com.greenchat.ui.colorPrimary
 import com.greenchat.ui.ghost_white
 import com.greenchat.util.Constants
 import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -131,7 +132,7 @@ fun ChatMessageBubble(chatData: ChatData) {
                             )
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(
-                                text = chatData.time.format(DateTimeFormatter.ofPattern("a h:mm")),
+                                text = chatData.time.format(DateTimeFormatter.ofPattern("a h:mm", Locale.ENGLISH)),
                                 color = Color.Gray,
                                 style = MaterialTheme.typography.bodySmall
                             )
@@ -164,7 +165,7 @@ fun ChatMessageBubble(chatData: ChatData) {
                             )
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(
-                                text = chatData.time.format(DateTimeFormatter.ofPattern("a h:mm")),
+                                text = chatData.time.format(DateTimeFormatter.ofPattern("a h:mm", Locale.ENGLISH)),
                                 color = Color.Gray,
                                 style = MaterialTheme.typography.bodySmall
                             )
