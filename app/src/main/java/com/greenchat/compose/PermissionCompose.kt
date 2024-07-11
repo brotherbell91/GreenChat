@@ -38,6 +38,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -68,7 +69,8 @@ fun PermissionScreen(openDashboard: () -> Unit) {
                     ) {
                         Column(
                             modifier = Modifier
-                                .padding(top = 30.dp, start = 30.dp, end = 30.dp),
+                                .padding(top = 30.dp, start = 30.dp, end = 30.dp)
+                                .weight(1f),
                         ) {
                             val loginText = "Allow Required Permissions."
                             val loginWord = "Allow"
@@ -101,8 +103,29 @@ fun PermissionScreen(openDashboard: () -> Unit) {
                                 fontSize = 22.sp,
                             )
 
-                            PermissionItems(openDashboard)
+                            PermissionItems()
+                        }
 
+                        Column(
+                            modifier = Modifier
+                                .padding(start = 30.dp, end = 30.dp, top = 15.dp, bottom = 15.dp)
+                        ){
+                            Button(
+                                onClick = openDashboard,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(52.dp),
+                                shape = RoundedCornerShape(16.dp),
+                                colors = ButtonDefaults.buttonColors(colorPrimary),
+                            ) {
+                                Text(
+                                    modifier = Modifier.padding(top = 7.dp, bottom = 7.dp),
+                                    text = "Allow All",
+                                    color = Color.White,
+                                    style = MaterialTheme.typography.titleSmall
+                                        .copy(fontSize = 16.sp, fontWeight = FontWeight.Bold),
+                                )
+                            }
                         }
                     }
                 }
@@ -112,31 +135,13 @@ fun PermissionScreen(openDashboard: () -> Unit) {
 }
 
 @Composable
-fun PermissionItems(openDashboard: () -> Unit) {
+fun PermissionItems() {
     LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-//        verticalArrangement = Arrangement.spacedBy(1.dp),
+        modifier = Modifier
+            .fillMaxSize()
     ) {
         items(PermissionData.permissions.count()) { index ->
             PermissionItem(PermissionData.permissions[index])
-        }
-
-        item{
-            Button(
-                onClick = openDashboard,
-                modifier = Modifier
-                    .padding(top = 5.dp, bottom = 15.dp)
-                    .fillMaxWidth().height(55.dp),
-                shape = RoundedCornerShape(16.dp),
-                colors = ButtonDefaults.buttonColors(colorPrimary),
-            ) {
-                Text(
-                    modifier = Modifier.padding(top = 8.dp, bottom = 8.dp),
-                    text = "Allow all",
-                    color = Color.White,
-                    style = MaterialTheme.typography.titleSmall.copy(fontSize = 17.sp),
-                )
-            }
         }
     }
 }
@@ -146,13 +151,13 @@ fun PermissionItem(permission: PermissionData) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 6.dp),
+            .padding(vertical = 4.dp),
         elevation = CardDefaults.cardElevation(4.dp),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(Color.White),
     ) {
         Column(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.padding(10.dp),
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             Row(
