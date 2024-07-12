@@ -19,11 +19,11 @@ data class ChatRoomData(
                 name = "Chat Room 1",
                 participantsCount = 10,
                 participants = listOf(
-                    EmployeeData(name = "이형종", position = "사원"),
-                    EmployeeData(name = "박원빈", position = "사원"),
-                    EmployeeData(name = "김수빈", position = "대리"),
-                    EmployeeData(name = "원빈", position = "차장"),
-                    EmployeeData(name = "김우빈", position = "이사"),
+                    EmployeeData(id = "lhj", name = "이형종", position = "사원"),
+                    EmployeeData(id = "pwb", name = "박원빈", position = "사원"),
+                    EmployeeData(id = "ksb",name = "김수빈", position = "대리"),
+                    EmployeeData(id = "wb", name = "원빈", position = "차장"),
+                    EmployeeData(id = "kwb",name = "김우빈", position = "이사"),
                 ),
                 chats = listOf(
                     ChatData(1, imageRes = R.drawable.profile, "이형종", 9, LocalDateTime.now(), "감사합니다."),
@@ -39,11 +39,11 @@ data class ChatRoomData(
                 name = "Chat Room 2",
                 participantsCount = 5,
                 participants = listOf(
-                    EmployeeData(name = "이형종", position = "사원"),
-                    EmployeeData(name = "박원빈", position = "사원"),
-                    EmployeeData(name = "김수빈", position = "대리"),
-                    EmployeeData(name = "원빈", position = "차장"),
-                    EmployeeData(name = "김우빈", position = "이사"),
+                    EmployeeData(id = "lhj", name = "이형종", position = "사원"),
+                    EmployeeData(id = "pwb", name = "박원빈", position = "사원"),
+                    EmployeeData(id = "ksb",name = "김수빈", position = "대리"),
+                    EmployeeData(id = "wb", name = "원빈", position = "차장"),
+                    EmployeeData(id = "kwb",name = "김우빈", position = "이사"),
                 ),
                 chats = listOf(
                     ChatData(1, imageRes = R.drawable.profile, "이형종", 9, LocalDateTime.now(), "감사합니다."),
@@ -59,11 +59,11 @@ data class ChatRoomData(
                 name = "Chat Room 3",
                 participantsCount = 8,
                 participants = listOf(
-                    EmployeeData(name = "이형종", position = "사원"),
-                    EmployeeData(name = "박원빈", position = "사원"),
-                    EmployeeData(name = "김수빈", position = "대리"),
-                    EmployeeData(name = "원빈", position = "차장"),
-                    EmployeeData(name = "김우빈", position = "이사"),
+                    EmployeeData(id = "lhj", name = "이형종", position = "사원"),
+                    EmployeeData(id = "pwb", name = "박원빈", position = "사원"),
+                    EmployeeData(id = "ksb",name = "김수빈", position = "대리"),
+                    EmployeeData(id = "wb", name = "원빈", position = "차장"),
+                    EmployeeData(id = "kwb",name = "김우빈", position = "이사"),
                 ),
                 chats = listOf(
                     ChatData(1, imageRes = R.drawable.profile, "이형종", 9, LocalDateTime.now(), "감사합니다."),
@@ -79,11 +79,11 @@ data class ChatRoomData(
                 name = "Chat Room 4",
                 participantsCount = 8,
                 participants = listOf(
-                    EmployeeData(name = "이형종", position = "사원"),
-                    EmployeeData(name = "박원빈", position = "사원"),
-                    EmployeeData(name = "김수빈", position = "대리"),
-                    EmployeeData(name = "원빈", position = "차장"),
-                    EmployeeData(name = "김우빈", position = "이사"),
+                    EmployeeData(id = "lhj", name = "이형종", position = "사원"),
+                    EmployeeData(id = "pwb", name = "박원빈", position = "사원"),
+                    EmployeeData(id = "ksb",name = "김수빈", position = "대리"),
+                    EmployeeData(id = "wb", name = "원빈", position = "차장"),
+                    EmployeeData(id = "kwb",name = "김우빈", position = "이사"),
                 ),
                 chats = listOf(
                     ChatData(1, imageRes = R.drawable.profile, "이형종", 9, LocalDateTime.now(), "감사합니다."),
@@ -99,11 +99,11 @@ data class ChatRoomData(
                 name = "Chat Room 5",
                 participantsCount = 8,
                 participants = listOf(
-                    EmployeeData(name = "이형종", position = "사원"),
-                    EmployeeData(name = "박원빈", position = "사원"),
-                    EmployeeData(name = "김수빈", position = "대리"),
-                    EmployeeData(name = "원빈", position = "차장"),
-                    EmployeeData(name = "김우빈", position = "이사"),
+                    EmployeeData(id = "lhj", name = "이형종", position = "사원"),
+                    EmployeeData(id = "pwb", name = "박원빈", position = "사원"),
+                    EmployeeData(id = "ksb",name = "김수빈", position = "대리"),
+                    EmployeeData(id = "wb", name = "원빈", position = "차장"),
+                    EmployeeData(id = "kwb",name = "김우빈", position = "이사"),
                 ),
                 chats = listOf(
                     ChatData(1, imageRes = R.drawable.profile, "이형종", 9, LocalDateTime.now(), "감사합니다."),
@@ -119,11 +119,11 @@ data class ChatRoomData(
                 name = "Chat Room 6",
                 participantsCount = 8,
                 participants = listOf(
-                    EmployeeData(name = "이형종", position = "사원"),
-                    EmployeeData(name = "박원빈", position = "사원"),
-                    EmployeeData(name = "김수빈", position = "대리"),
-                    EmployeeData(name = "원빈", position = "차장"),
-                    EmployeeData(name = "김우빈", position = "이사"),
+                    EmployeeData(id = "lhj", name = "이형종", position = "사원"),
+                    EmployeeData(id = "pwb", name = "박원빈", position = "사원"),
+                    EmployeeData(id = "ksb",name = "김수빈", position = "대리"),
+                    EmployeeData(id = "wb", name = "원빈", position = "차장"),
+                    EmployeeData(id = "kwb",name = "김우빈", position = "이사"),
                 ),
                 chats = listOf(
                     ChatData(1, imageRes = R.drawable.profile, "이형종", 9, LocalDateTime.now(), "감사합니다."),
@@ -139,11 +139,11 @@ data class ChatRoomData(
                 name = "Chat Room 7",
                 participantsCount = 10,
                 participants = listOf(
-                    EmployeeData(name = "이형종", position = "사원"),
-                    EmployeeData(name = "박원빈", position = "사원"),
-                    EmployeeData(name = "김수빈", position = "대리"),
-                    EmployeeData(name = "원빈", position = "차장"),
-                    EmployeeData(name = "김우빈", position = "이사"),
+                    EmployeeData(id = "lhj", name = "이형종", position = "사원"),
+                    EmployeeData(id = "pwb", name = "박원빈", position = "사원"),
+                    EmployeeData(id = "ksb",name = "김수빈", position = "대리"),
+                    EmployeeData(id = "wb", name = "원빈", position = "차장"),
+                    EmployeeData(id = "kwb",name = "김우빈", position = "이사"),
                 ),
                 chats = listOf(
                     ChatData(1, imageRes = R.drawable.profile, "이형종", 9, LocalDateTime.now(), "감사합니다."),
@@ -159,11 +159,11 @@ data class ChatRoomData(
                 name = "Chat Room 8",
                 participantsCount = 5,
                 participants = listOf(
-                    EmployeeData(name = "이형종", position = "사원"),
-                    EmployeeData(name = "박원빈", position = "사원"),
-                    EmployeeData(name = "김수빈", position = "대리"),
-                    EmployeeData(name = "원빈", position = "차장"),
-                    EmployeeData(name = "김우빈", position = "이사"),
+                    EmployeeData(id = "lhj", name = "이형종", position = "사원"),
+                    EmployeeData(id = "pwb", name = "박원빈", position = "사원"),
+                    EmployeeData(id = "ksb",name = "김수빈", position = "대리"),
+                    EmployeeData(id = "wb", name = "원빈", position = "차장"),
+                    EmployeeData(id = "kwb",name = "김우빈", position = "이사"),
                 ),
                 chats = listOf(
                     ChatData(1, imageRes = R.drawable.profile, "이형종", 9, LocalDateTime.now(), "감사합니다."),
@@ -182,7 +182,7 @@ data class ChatRoomData(
                 name = "Open Chat Room 1",
                 participantsCount = 20,
                 participants = listOf(
-                    EmployeeData(name = "Green", position = "CEO"),
+                    EmployeeData(id = "g", name = "Green", position = "CEO"),
                 ),
                 chats = listOf(
                     ChatData(1, imageRes = R.drawable.profile, "박민수", 19, LocalDateTime.now(), "확인했습니다."),
@@ -198,7 +198,7 @@ data class ChatRoomData(
                 name = "Open Chat Room 2",
                 participantsCount = 15,
                 participants = listOf(
-                    EmployeeData(name = "Green", position = "CEO"),
+                    EmployeeData(id = "g", name = "Green", position = "CEO"),
                 ),
                 chats = listOf(
                     ChatData(1, imageRes = R.drawable.profile, "박민수", 19, LocalDateTime.now(), "확인했습니다."),
@@ -214,7 +214,7 @@ data class ChatRoomData(
                 name = "Open Chat Room 3",
                 participantsCount = 12,
                 participants = listOf(
-                    EmployeeData(name = "Green", position = "CEO"),
+                    EmployeeData(id = "g", name = "Green", position = "CEO"),
                 ),
                 chats = listOf(
                     ChatData(1, imageRes = R.drawable.profile, "박민수", 19, LocalDateTime.now(), "확인했습니다."),
