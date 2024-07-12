@@ -17,15 +17,20 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.greenchat.MainActivity
 import com.greenchat.R
 import com.greenchat.data.DepartmentData
+import com.greenchat.fragment.ProfileFragment
 import com.greenchat.ui.ghost_white
+import com.greenchat.util.Constants
 
 @Composable
 fun OrganizationScreen() {
+    val activity = LocalContext.current as? MainActivity
     val selectedIndex = remember { mutableStateOf(0) }
     Row(modifier = Modifier.fillMaxSize()) {
         NavigationRail(
@@ -82,8 +87,16 @@ fun OrganizationScreen() {
             .weight(1f)
             .fillMaxSize()) {
             when (selectedIndex.value) {
-                0 -> BuddyScreen(department = DepartmentData.organizationBuddy)
-                1 -> DepartmentScreen(department = DepartmentData.organizationDepartment)
+                0 -> BuddyScreen(openDashboard = { employee ->
+                    (activity as MainActivity).addTopFragment(
+                        ProfileFragment.newInstance(employee),
+                        Constants.PROFILE_FRAGMENT_TAG
+                    )}, department = DepartmentData.organizationBuddy)
+                1 -> DepartmentScreen(openDashboard = { employee ->
+                    (activity as MainActivity).addTopFragment(
+                        ProfileFragment.newInstance(employee),
+                        Constants.PROFILE_FRAGMENT_TAG
+                    )}, department = DepartmentData.organizationDepartment)//채팅방 리스트
             }
         }
     }

@@ -38,20 +38,20 @@ import com.greenchat.data.DepartmentData
 import com.greenchat.data.EmployeeData
 
 @Composable
-fun DepartmentScreen(department: DepartmentData) {
+fun DepartmentScreen(openDashboard: (EmployeeData) -> Unit, department: DepartmentData) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .padding(8.dp)
     ) {
         item {
-            DepartmentHierarchy(department)
+            DepartmentHierarchy(openDashboard, department)
         }
     }
 }
 
 @Composable
-fun DepartmentHierarchy(department: DepartmentData) {
+fun DepartmentHierarchy(openDashboard: (EmployeeData) -> Unit, department: DepartmentData) {
     var expanded by remember { mutableStateOf(true) }
 
     Column(
@@ -68,11 +68,11 @@ fun DepartmentHierarchy(department: DepartmentData) {
             ){
                 department.employees.forEachIndexed {index, employee ->
                     val isLast = index == department.employees.lastIndex
-                    EmployeeCard(employee, isLast)
+                    EmployeeCard(openDashboard, employee, isLast)
                 }
             }
             department.subDepartments.forEach { subDepartment ->
-                DepartmentHierarchy(subDepartment)
+                DepartmentHierarchy(openDashboard, subDepartment)
             }
             if(department.subDepartments.isEmpty() && department.employees.isEmpty()){
                 EmptyCard()
@@ -146,11 +146,12 @@ fun DepartmentCard(department: DepartmentData, expanded: Boolean, onClick: () ->
 }
 
 @Composable
-fun EmployeeCard(employee: EmployeeData, isLast: Boolean) {
+fun EmployeeCard(openDashboard: (EmployeeData) -> Unit, employee: EmployeeData, isLast: Boolean) {
     Card(
         shape = RoundedCornerShape(16.dp),
         modifier = Modifier
             .fillMaxWidth()
+            .clickable { openDashboard(employee) }
             .background(Color.Transparent),
         colors = CardDefaults.cardColors(containerColor = Color.Transparent)
     ) {
@@ -207,5 +208,5 @@ fun ProfileImage(image: Painter) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewDepartmentScreen() {
-    DepartmentScreen(DepartmentData.organizationDepartment)
+    DepartmentScreen(openDashboard = {}, DepartmentData.organizationDepartment)
 }

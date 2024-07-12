@@ -8,16 +8,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.greenchat.data.DepartmentData
+import com.greenchat.data.EmployeeData
 
 @Composable
-fun BuddyScreen(department: DepartmentData) {
+fun BuddyScreen(openDashboard: (EmployeeData) -> Unit, department: DepartmentData) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .padding(8.dp)
     ) {
         item {
-            DepartmentHierarchy(department)
+            DepartmentHierarchy(openDashboard, department)
         }
     }
 }
@@ -25,5 +26,5 @@ fun BuddyScreen(department: DepartmentData) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewBuddyScreen() {
-    BuddyScreen(DepartmentData.organizationBuddy)
+    BuddyScreen(openDashboard = {}, DepartmentData.organizationBuddy)
 }
