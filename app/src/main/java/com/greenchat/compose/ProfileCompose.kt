@@ -7,12 +7,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -68,14 +70,14 @@ fun ProfileScreen(employeeData : EmployeeData) {
         ) {
             item {
                 ConstraintLayout {
-                    val (image, loginForm) = createRefs()
+                    val (image, profileForm) = createRefs()
                     Box(
                         contentAlignment = Alignment.Center,
                         modifier = Modifier
                             .height(280.dp)
                             .constrainAs(image) {
-                                top.linkTo(loginForm.top)
-                                bottom.linkTo(loginForm.top)
+                                top.linkTo(profileForm.top)
+                                bottom.linkTo(profileForm.top)
                                 start.linkTo(parent.start)
                                 end.linkTo(parent.end)
                             }) {
@@ -89,7 +91,7 @@ fun ProfileScreen(employeeData : EmployeeData) {
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(top = 100.dp)
-                            .constrainAs(loginForm) {
+                            .constrainAs(profileForm) {
                                 bottom.linkTo(parent.bottom)
                                 start.linkTo(parent.start)
                                 end.linkTo(parent.end)
@@ -140,45 +142,10 @@ fun ProfileScreen(employeeData : EmployeeData) {
                                 verticalArrangement = Arrangement.Top,
                                 horizontalAlignment = Alignment.CenterHorizontally,
                             ) {
-                                Row(
-                                    modifier = Modifier.fillMaxWidth().padding(20.dp),
-                                    horizontalArrangement = Arrangement.SpaceBetween,
-                                    verticalAlignment = Alignment.CenterVertically,
-                                ) {
-                                    Text(text = "Name : ",
-                                        fontSize = 30.sp,
-                                        color = colorPrimary)
-
-                                    Text(text = "Name : ",
-                                        fontSize = 30.sp,
-                                        color = colorPrimary)
-                                }
-                                Row(
-                                    modifier = Modifier.fillMaxWidth().padding(20.dp),
-                                    horizontalArrangement = Arrangement.SpaceBetween,
-                                    verticalAlignment = Alignment.CenterVertically,
-                                ) {
-                                    Text(text = "Email : ",
-                                        fontSize = 30.sp,
-                                        color = colorPrimary)
-
-                                    Text(text = "Name : ",
-                                        fontSize = 30.sp,
-                                        color = colorPrimary)
-                                }
-                                Row(
-                                    modifier = Modifier.fillMaxWidth().padding(20.dp),
-                                    horizontalArrangement = Arrangement.SpaceBetween,
-                                    verticalAlignment = Alignment.CenterVertically,
-                                ) {
-                                    Text(text = "Position : ",
-                                        fontSize = 30.sp,
-                                        color = colorPrimary)
-
-                                    Text(text = "Name : ",
-                                        fontSize = 30.sp,
-                                        color = colorPrimary)
-                                }
+                                Spacer(modifier = Modifier.height(50.dp))
+                                ProfileItem(itemTitle = "Name", itemValue = employeeData.name)
+                                ProfileItem(itemTitle = "Email", itemValue = employeeData.id)
+                                ProfileItem(itemTitle = "Position", itemValue = employeeData.position)
                             }
                         }
                     }
@@ -211,8 +178,46 @@ fun ProfileHeaderView() {
     }
 }
 
+@Composable
+fun ProfileItem(itemTitle: String, itemValue: String) {
+    Card(
+        modifier = Modifier
+            .wrapContentSize()
+            .padding(vertical = 5.dp),
+        elevation = CardDefaults.cardElevation(4.dp),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(Color.White),
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp)
+                .padding(horizontal = 25.dp)
+        ) {
+            Text(
+                text = itemTitle,
+                style = MaterialTheme.typography.bodyLarge,
+                color = colorPrimary
+            )
+            Text(
+                text = itemValue,
+                style = MaterialTheme.typography.labelLarge,
+                color = colorPrimary
+            )
+        }
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun PreviewProfileScreen() {
     ProfileScreen(DepartmentData.organizationDepartment.employees.get(0))
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewProfileItem() {
+    ProfileItem("Name", "이형종")
 }
