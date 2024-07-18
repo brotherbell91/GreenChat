@@ -7,11 +7,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
@@ -67,7 +69,7 @@ fun ProfileScreen(employeeData : EmployeeData) {
                         ) {
                             Column(modifier = Modifier
                                 .fillMaxWidth()
-                                .height(100.dp),
+                                .height(120.dp),
                                 verticalArrangement = Arrangement.Center,
                                 horizontalAlignment = Alignment.CenterHorizontally,
                             ) {
@@ -75,19 +77,58 @@ fun ProfileScreen(employeeData : EmployeeData) {
                                     painter = painterResource(id = employeeData.imageRes),
                                     contentDescription = null,
                                     modifier = Modifier
-                                        .size(70.dp)
+                                        .size(90.dp)
                                         .clip(CircleShape)
-                                        .background(Color.Transparent),
+                                        .background(Color.White),
                                     contentScale = ContentScale.Crop,
                                 )
                             }
 
-                            Card(
+                            Spacer(modifier = Modifier.height(25.dp))
+                            Row(
                                 modifier = Modifier
-                                    .fillMaxSize(),
-                                elevation = CardDefaults.cardElevation(4.dp),
-                                shape = RoundedCornerShape(16.dp),
-                                colors = CardDefaults.cardColors(Color.White),
+                                    .fillMaxWidth()
+                                    .wrapContentHeight(),
+                                horizontalArrangement = Arrangement.SpaceAround,
+                                verticalAlignment = Alignment.CenterVertically,
+                            ){
+                                Image(
+                                    modifier = Modifier
+                                        .size(50.dp)
+                                        .clickable { }
+                                        .clip((CircleShape)),
+                                    bitmap = ImageBitmap.imageResource(id = R.drawable.chat),
+                                    contentScale = ContentScale.Crop,
+                                    colorFilter = ColorFilter.tint(colorPrimary),
+                                    contentDescription = "Add Chat"
+                                )
+                                Image(
+                                    modifier = Modifier
+                                        .size(50.dp)
+                                        .clickable { }
+                                        .clip((CircleShape)),
+                                    bitmap = ImageBitmap.imageResource(id = R.drawable.message),
+                                    contentScale = ContentScale.Crop,
+                                    colorFilter = ColorFilter.tint(colorPrimary),
+                                    contentDescription = "Add Message"
+                                )
+                                Image(
+                                    modifier = Modifier
+                                        .size(50.dp)
+                                        .clickable { }
+                                        .clip((CircleShape)),
+                                    bitmap = ImageBitmap.imageResource(id = R.drawable.department),
+                                    contentScale = ContentScale.Crop,
+                                    colorFilter = ColorFilter.tint(colorPrimary),
+                                    contentDescription = "Add Employee"
+                                )
+                            }
+                            Spacer(modifier = Modifier.height(20.dp))
+
+
+                            Column(
+                                verticalArrangement = Arrangement.Top,
+                                horizontalAlignment = Alignment.CenterHorizontally,
                             ) {
                                 LazyColumn(
                                     verticalArrangement = Arrangement.Top,
@@ -95,43 +136,6 @@ fun ProfileScreen(employeeData : EmployeeData) {
                                         .padding(16.dp),
                                 ) {
                                     item{
-                                        Spacer(modifier = Modifier.height(20.dp))
-                                        Row(
-                                            modifier = Modifier.fillMaxSize(),
-                                            horizontalArrangement = Arrangement.SpaceAround,
-                                            verticalAlignment = Alignment.CenterVertically,
-                                        ){
-                                            Image(
-                                                modifier = Modifier
-                                                    .size(50.dp)
-                                                    .clickable {  }
-                                                    .clip((CircleShape)),
-                                                bitmap = ImageBitmap.imageResource(id = R.drawable.chat),
-                                                contentScale = ContentScale.Crop,
-                                                colorFilter = ColorFilter.tint(colorPrimary),
-                                                contentDescription = "Add Chat"
-                                            )
-                                            Image(
-                                                modifier = Modifier
-                                                    .size(50.dp)
-                                                    .clickable {  }
-                                                    .clip((CircleShape)),
-                                                bitmap = ImageBitmap.imageResource(id = R.drawable.message),
-                                                contentScale = ContentScale.Crop,
-                                                colorFilter = ColorFilter.tint(colorPrimary),
-                                                contentDescription = "Add Message"
-                                            )
-                                            Image(
-                                                modifier = Modifier
-                                                    .size(50.dp)
-                                                    .clickable {  }
-                                                    .clip((CircleShape)),
-                                                bitmap = ImageBitmap.imageResource(id = R.drawable.department),
-                                                contentScale = ContentScale.Crop,
-                                                colorFilter = ColorFilter.tint(colorPrimary),
-                                                contentDescription = "Add Employee"
-                                            )
-                                        }
                                         Column(
                                             modifier = Modifier
                                                 .fillMaxSize()
@@ -139,13 +143,13 @@ fun ProfileScreen(employeeData : EmployeeData) {
                                             verticalArrangement = Arrangement.Top,
                                             horizontalAlignment = Alignment.CenterHorizontally,
                                         ) {
-                                            Spacer(modifier = Modifier.height(50.dp))
                                             ProfileItem(itemTitle = "Name", itemValue = employeeData.name)
                                             ProfileItem(itemTitle = "Department", itemValue = employeeData.department)
                                             ProfileItem(itemTitle = "Position", itemValue = employeeData.position)
                                             ProfileItem(itemTitle = "Email", itemValue = employeeData.id)
                                             ProfileItem(itemTitle = "Phone number", itemValue = employeeData.phone)
                                         }
+
                                     }
                                 }
                             }
