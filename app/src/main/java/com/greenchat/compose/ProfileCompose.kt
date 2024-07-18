@@ -2,6 +2,7 @@ package com.greenchat.compose
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,7 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -28,14 +28,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.greenchat.R
 import com.greenchat.data.DepartmentData
 import com.greenchat.data.EmployeeData
@@ -66,8 +65,11 @@ fun ProfileScreen(employeeData : EmployeeData) {
                                 .padding(24.dp)
                                 .fillMaxSize(),
                         ) {
-                            Column(
-
+                            Column(modifier = Modifier
+                                .fillMaxWidth()
+                                .height(100.dp),
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally,
                             ) {
                                 Image(
                                     painter = painterResource(id = employeeData.imageRes),
@@ -93,13 +95,57 @@ fun ProfileScreen(employeeData : EmployeeData) {
                                         .padding(16.dp),
                                 ) {
                                     item{
-                                        Text(
-                                            text = "Hi HyeongJong Lee!!",
-                                            style = MaterialTheme.typography.bodyLarge.copy(
-                                                fontWeight = FontWeight.Medium,
-                                                fontSize = 16.sp
+                                        Spacer(modifier = Modifier.height(20.dp))
+                                        Row(
+                                            modifier = Modifier.fillMaxSize(),
+                                            horizontalArrangement = Arrangement.SpaceAround,
+                                            verticalAlignment = Alignment.CenterVertically,
+                                        ){
+                                            Image(
+                                                modifier = Modifier
+                                                    .size(50.dp)
+                                                    .clickable {  }
+                                                    .clip((CircleShape)),
+                                                bitmap = ImageBitmap.imageResource(id = R.drawable.chat),
+                                                contentScale = ContentScale.Crop,
+                                                colorFilter = ColorFilter.tint(colorPrimary),
+                                                contentDescription = "Add Chat"
                                             )
-                                        )
+                                            Image(
+                                                modifier = Modifier
+                                                    .size(50.dp)
+                                                    .clickable {  }
+                                                    .clip((CircleShape)),
+                                                bitmap = ImageBitmap.imageResource(id = R.drawable.message),
+                                                contentScale = ContentScale.Crop,
+                                                colorFilter = ColorFilter.tint(colorPrimary),
+                                                contentDescription = "Add Message"
+                                            )
+                                            Image(
+                                                modifier = Modifier
+                                                    .size(50.dp)
+                                                    .clickable {  }
+                                                    .clip((CircleShape)),
+                                                bitmap = ImageBitmap.imageResource(id = R.drawable.department),
+                                                contentScale = ContentScale.Crop,
+                                                colorFilter = ColorFilter.tint(colorPrimary),
+                                                contentDescription = "Add Employee"
+                                            )
+                                        }
+                                        Column(
+                                            modifier = Modifier
+                                                .fillMaxSize()
+                                                .padding(bottom = 30.dp),
+                                            verticalArrangement = Arrangement.Top,
+                                            horizontalAlignment = Alignment.CenterHorizontally,
+                                        ) {
+                                            Spacer(modifier = Modifier.height(50.dp))
+                                            ProfileItem(itemTitle = "Name", itemValue = employeeData.name)
+                                            ProfileItem(itemTitle = "Department", itemValue = employeeData.department)
+                                            ProfileItem(itemTitle = "Position", itemValue = employeeData.position)
+                                            ProfileItem(itemTitle = "Email", itemValue = employeeData.id)
+                                            ProfileItem(itemTitle = "Phone number", itemValue = employeeData.phone)
+                                        }
                                     }
                                 }
                             }
@@ -109,97 +155,6 @@ fun ProfileScreen(employeeData : EmployeeData) {
             },
         )
     }
-//    JetPackComposeTheme {
-//        LazyColumn(
-//            modifier = Modifier.fillMaxSize(),
-//            horizontalAlignment = Alignment.CenterHorizontally
-//        ) {
-//            item {
-//                ConstraintLayout {
-//                    val (image, profileForm) = createRefs()
-//                    Box(
-//                        contentAlignment = Alignment.Center,
-//                        modifier = Modifier
-//                            .height(280.dp)
-//                            .constrainAs(image) {
-//                                top.linkTo(profileForm.top)
-//                                bottom.linkTo(profileForm.top)
-//                                start.linkTo(parent.start)
-//                                end.linkTo(parent.end)
-//                            }) {
-//                        ProfileHeaderView()
-//                    }
-//                    Card(
-//                        shape = RoundedCornerShape(topStart = 40.dp, topEnd = 40.dp),
-//                        colors = CardDefaults.cardColors(
-//                            containerColor = ghost_white
-//                        ),
-//                        modifier = Modifier
-//                            .fillMaxSize()
-//                            .padding(top = 100.dp)
-//                            .constrainAs(profileForm) {
-//                                bottom.linkTo(parent.bottom)
-//                                start.linkTo(parent.start)
-//                                end.linkTo(parent.end)
-//                            }
-//                    ) {
-//                        Column(
-//                            modifier = Modifier
-//                                .fillMaxSize()
-//                                .padding(30.dp)
-//                        ) {
-//                            Row(
-//                                modifier = Modifier.fillMaxSize(),
-//                                horizontalArrangement = Arrangement.SpaceAround,
-//                                verticalAlignment = Alignment.CenterVertically,
-//                            ){
-//                                Image(
-//                                    modifier = Modifier
-//                                        .size(50.dp)
-//                                        .clip((CircleShape)),
-//                                    bitmap = ImageBitmap.imageResource(id = R.drawable.chat),
-//                                    contentScale = ContentScale.Crop,
-//                                    colorFilter = ColorFilter.tint(colorPrimary),
-//                                    contentDescription = "Add Chat"
-//                                )
-//                                Image(
-//                                    modifier = Modifier
-//                                        .size(50.dp)
-//                                        .clip((CircleShape)),
-//                                    bitmap = ImageBitmap.imageResource(id = R.drawable.message),
-//                                    contentScale = ContentScale.Crop,
-//                                    colorFilter = ColorFilter.tint(colorPrimary),
-//                                    contentDescription = "Add Message"
-//                                )
-//                                Image(
-//                                    modifier = Modifier
-//                                        .size(50.dp)
-//                                        .clip((CircleShape)),
-//                                    bitmap = ImageBitmap.imageResource(id = R.drawable.department),
-//                                    contentScale = ContentScale.Crop,
-//                                    colorFilter = ColorFilter.tint(colorPrimary),
-//                                    contentDescription = "Add Employee"
-//                                )
-//                            }
-//                            Column(
-//                                modifier = Modifier
-//                                    .fillMaxSize()
-//                                    .padding(bottom = 30.dp),
-//                                verticalArrangement = Arrangement.Top,
-//                                horizontalAlignment = Alignment.CenterHorizontally,
-//                            ) {
-//                                Spacer(modifier = Modifier.height(50.dp))
-//                                ProfileItem(itemTitle = "Name", itemValue = employeeData.name)
-//                                ProfileItem(itemTitle = "Email", itemValue = employeeData.id)
-//                                ProfileItem(itemTitle = "Position", itemValue = employeeData.position)
-//
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
 }
 
 @Composable
