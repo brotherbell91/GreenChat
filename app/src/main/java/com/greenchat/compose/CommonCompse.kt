@@ -116,12 +116,12 @@ fun todayCheck(time: LocalDateTime) : String{
 }
 
 @Composable
-fun FloatingButton(onClick: () -> Unit, image : ImageVector){
+fun FloatingButton(openDashboard: () -> Unit, image : ImageVector){
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
         FloatingActionButton(
-            onClick = { onClick() },
+            onClick = { openDashboard },
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(32.dp),
@@ -136,5 +136,5 @@ fun FloatingButton(onClick: () -> Unit, image : ImageVector){
 @Preview(showBackground = true)
 @Composable
 fun PreviewFloatingButton(){
-    FloatingButton(onClick = {}, Icons.Default.Edit )
+    FloatingButton(openDashboard = {}, Icons.Default.Edit )
 }

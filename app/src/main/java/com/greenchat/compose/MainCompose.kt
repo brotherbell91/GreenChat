@@ -74,13 +74,13 @@ fun MainScreen() {
                                         ChatRoomFragment.newInstance(chatRoom, selectedTab),
                                         Constants.CHATROOM_FRAGMENT_TAG
                                     )}
-                                    FloatingButton(onClick = {}, Icons.Default.Add)}//채팅방 리스트
+                                    FloatingButton(openDashboard = {}, Icons.Default.Add)}//채팅방 리스트
                                 2 -> {MessageListScreen() { message, selectedTab ->
                                     (activity as MainActivity).addTopFragment(
                                         MessageFragment.newInstance(message, selectedTab),
                                         Constants.MESSAGE_FRAGMENT_TAG
                                     )}
-                                    FloatingButton(onClick = {}, Icons.Default.Edit)}//메시지 리스트
+                                    FloatingButton(openDashboard = {}, Icons.Default.Edit)}//메시지 리스트
                                 3 -> {} //더보기
                             }
                         }
