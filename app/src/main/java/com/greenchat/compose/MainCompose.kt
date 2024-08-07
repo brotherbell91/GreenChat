@@ -10,6 +10,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -66,16 +69,18 @@ fun MainScreen() {
                         Box {
                             when (selectedIndex.value) {
                                 0 -> OrganizationScreen() //조직
-                                1 -> ChatListScreen() { chatRoom, selectedTab ->
+                                1 -> {ChatListScreen() { chatRoom, selectedTab ->
                                     (activity as MainActivity).addTopFragment(
                                         ChatRoomFragment.newInstance(chatRoom, selectedTab),
                                         Constants.CHATROOM_FRAGMENT_TAG
-                                    )}//채팅방 리스트
-                                2 -> MessageListScreen() { message, selectedTab ->
+                                    )}
+                                    FloatingButton(onClick = {}, Icons.Default.Add)}//채팅방 리스트
+                                2 -> {MessageListScreen() { message, selectedTab ->
                                     (activity as MainActivity).addTopFragment(
                                         MessageFragment.newInstance(message, selectedTab),
                                         Constants.MESSAGE_FRAGMENT_TAG
-                                    )}//메시지 리스트
+                                    )}
+                                    FloatingButton(onClick = {}, Icons.Default.Edit)}//메시지 리스트
                                 3 -> {} //더보기
                             }
                         }
