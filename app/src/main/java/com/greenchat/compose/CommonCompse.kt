@@ -64,15 +64,15 @@ fun CustomTopAppBar(backButton : Boolean, tag: String? = null, title: String? = 
                         fontSize = 22.sp
                     )
                 )
-                IconButton(
-                    modifier = Modifier.align(Alignment.CenterEnd),
-                    onClick = { }
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_search),
-                        contentDescription = "dashboard_search"
-                    )
-                }
+//                IconButton(
+//                    modifier = Modifier.align(Alignment.CenterEnd),
+//                    onClick = { }
+//                ) {
+//                    Image(
+//                        painter = painterResource(id = R.drawable.ic_search),
+//                        contentDescription = "dashboard_search"
+//                    )
+//                }
             }
         },
         colors = TopAppBarDefaults.smallTopAppBarColors(
