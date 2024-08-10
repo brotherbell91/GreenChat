@@ -133,6 +133,31 @@ fun FloatingButton(openDashboard: () -> Unit, image : ImageVector){
     }
 }
 
+@Composable
+fun FloatingButton(openDashboard: () -> Unit, image : Int){
+    Box(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        FloatingActionButton(
+            onClick = { openDashboard() },
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(32.dp),
+            containerColor = colorPrimary,
+            contentColor = Color.White,
+        ) {
+            Icon(
+                painter = painterResource(id = image),
+                contentDescription = "Icon.",
+                tint = Color.White,
+                modifier = Modifier
+                    .padding(12.dp)
+                    .size(25.dp)
+            )
+        }
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun PreviewFloatingButton(){
