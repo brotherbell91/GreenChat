@@ -4,10 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
+import com.greenchat.MainActivity
 import com.greenchat.compose.ProfileScreen
 import com.greenchat.data.EmployeeData
+import com.greenchat.util.Constants
 
 class ProfileFragment : Fragment() {
 
@@ -31,6 +34,15 @@ class ProfileFragment : Fragment() {
     ): View? {
         return ComposeView(requireContext()).apply {
             setContent {
+                requireActivity().onBackPressedDispatcher.addCallback(
+                    viewLifecycleOwner,
+                    object : OnBackPressedCallback(true) {
+                        override fun handleOnBackPressed() {
+                            (activity as MainActivity).removeTopFragment(Constants.PROFILE_FRAGMENT_TAG)
+                        }
+                    }
+                )
+
                 val employeeData = arguments?.getParcelable(ARG_EMPLOYEE) as? EmployeeData
                 employeeData?.let { ProfileScreen(it) }
             }

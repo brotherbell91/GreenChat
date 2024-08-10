@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
+import com.greenchat.MainActivity
 import com.greenchat.compose.MessageScreen
 import com.greenchat.data.MessageData
 import com.greenchat.data.MessageListData
+import com.greenchat.util.Constants
 
 class MessageFragment : Fragment() {
 
@@ -34,6 +37,15 @@ class MessageFragment : Fragment() {
     ): View? {
         return ComposeView(requireContext()).apply {
             setContent {
+                requireActivity().onBackPressedDispatcher.addCallback(
+                    viewLifecycleOwner,
+                    object : OnBackPressedCallback(true) {
+                        override fun handleOnBackPressed() {
+                            (activity as MainActivity).removeTopFragment(Constants.MESSAGE_FRAGMENT_TAG)
+                        }
+                    }
+                )
+
                 val messageListData = arguments?.getParcelable(ARG_MESSAGE) as? MessageListData
                 val messageType = arguments?.getInt(ARG_TYPE)
                 val messages = if (messageType == 0) MessageData.receiveMessage else MessageData.sendMessage

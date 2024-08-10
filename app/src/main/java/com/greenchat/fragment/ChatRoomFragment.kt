@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
+import com.greenchat.MainActivity
 import com.greenchat.compose.ChatRoomScreen
 import com.greenchat.data.ChatRoomData
 import com.greenchat.data.ChatRoomListData
+import com.greenchat.util.Constants
 
 class ChatRoomFragment : Fragment() {
 
@@ -34,6 +37,15 @@ class ChatRoomFragment : Fragment() {
     ): View? {
         return ComposeView(requireContext()).apply {
             setContent {
+                requireActivity().onBackPressedDispatcher.addCallback(
+                    viewLifecycleOwner,
+                    object : OnBackPressedCallback(true) {
+                        override fun handleOnBackPressed() {
+                            (activity as MainActivity).removeTopFragment(Constants.CHATROOM_FRAGMENT_TAG)
+                        }
+                    }
+                )
+
                 val chatRoomListData = arguments?.getParcelable(ARG_CHATROOM) as? ChatRoomListData
                 val chatRoomType = arguments?.getInt(ChatRoomFragment.ARG_TYPE)
                 val chatRooms = if (chatRoomType == 0) ChatRoomData.chat else ChatRoomData.openChat
