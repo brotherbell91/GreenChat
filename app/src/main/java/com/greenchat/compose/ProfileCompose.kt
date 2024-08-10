@@ -32,13 +32,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.greenchat.MainActivity
 import com.greenchat.R
 import com.greenchat.data.DepartmentData
 import com.greenchat.data.EmployeeData
+import com.greenchat.fragment.MessageEditFragment
 import com.greenchat.ui.colorPrimary
 import com.greenchat.ui.ghost_white
 import com.greenchat.util.Constants
@@ -46,6 +49,7 @@ import com.greenchat.util.Constants
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen(employeeData : EmployeeData) {
+    val activity = LocalContext.current as? MainActivity
     Surface(modifier = Modifier.fillMaxSize()) {
         Scaffold(
             topBar = { CustomTopAppBar(true, Constants.MESSAGE_FRAGMENT_TAG, employeeData.name) },
@@ -104,7 +108,12 @@ fun ProfileScreen(employeeData : EmployeeData) {
                                 Image(
                                     modifier = Modifier
                                         .size(50.dp)
-                                        .clickable { }
+                                        .clickable {
+                                            (activity as MainActivity).addTopFragment(
+                                                MessageEditFragment.newInstance(employeeData),
+                                                Constants.MESSAGE_EDIT_FRAGMENT_TAG
+                                            )
+                                        }
                                         .clip((CircleShape)),
                                     bitmap = ImageBitmap.imageResource(id = R.drawable.message),
                                     contentScale = ContentScale.Crop,
