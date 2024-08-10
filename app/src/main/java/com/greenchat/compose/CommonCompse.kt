@@ -121,7 +121,7 @@ fun FloatingButton(openDashboard: () -> Unit, image : ImageVector){
         modifier = Modifier.fillMaxSize()
     ) {
         FloatingActionButton(
-            onClick = { openDashboard },
+            onClick = { openDashboard() },
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(32.dp),
