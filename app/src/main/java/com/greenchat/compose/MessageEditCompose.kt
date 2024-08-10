@@ -3,6 +3,7 @@ package com.greenchat.compose
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,11 +12,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -48,12 +51,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextStyle
+import java.util.ArrayList
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MessageEditScreen(employeeData: EmployeeData, myData : EmployeeData) {
     val text = remember { mutableStateOf("") }
+    val subject = remember { mutableStateOf("") }
+    val employeeDataList = ArrayList<EmployeeData>()
+    if(employeeData.id != "") employeeDataList.add(employeeData)
     Surface(modifier = Modifier.fillMaxSize()) {
         Scaffold(
             topBar = { CustomTopAppBar(true, Constants.MESSAGE_EDIT_FRAGMENT_TAG, "Send Message") },
@@ -129,8 +137,16 @@ fun MessageEditScreen(employeeData: EmployeeData, myData : EmployeeData) {
                                                                 fontSize = 16.sp
                                                             )
                                                         )
+                                                        var toText = ""
+                                                        for ((index, tempEmployeeData) in employeeDataList.withIndex()) {
+                                                            if (index == employeeDataList.size - 1) {
+                                                                toText = toText + tempEmployeeData.name
+                                                            } else{
+                                                                toText = toText + tempEmployeeData.name + ", "
+                                                            }
+                                                        }
                                                         Text(
-                                                            text = "",
+                                                            text = toText,
                                                             style = MaterialTheme.typography.bodyLarge.copy(
                                                                 fontWeight = FontWeight.Bold,
                                                                 fontSize = 16.sp,
@@ -143,7 +159,9 @@ fun MessageEditScreen(employeeData: EmployeeData, myData : EmployeeData) {
                                             Spacer(modifier = Modifier.height(4.dp))
                                             Row(
                                                 horizontalArrangement = Arrangement.Start,
-                                                verticalAlignment = Alignment.CenterVertically
+                                                verticalAlignment = Alignment.CenterVertically,
+                                                modifier = Modifier
+                                                    .height(20.dp)
                                             ) {
                                                 Text(
                                                     text = "Subject: ",
@@ -152,14 +170,28 @@ fun MessageEditScreen(employeeData: EmployeeData, myData : EmployeeData) {
                                                         fontSize = 16.sp
                                                     ),
                                                 )
-                                                Text(
-                                                    text = "",
-                                                    style = MaterialTheme.typography.bodyMedium.copy(
-                                                        fontWeight = FontWeight.Bold,
-                                                        fontSize = 18.sp,
-                                                        color = colorPrimary
-                                                    ),
-                                                )
+                                                Box(
+                                                    modifier = Modifier
+                                                        .wrapContentSize()
+                                                ) {
+                                                    BasicTextField(
+                                                        value = subject.value,
+                                                        onValueChange = { subject.value = it },
+                                                        modifier = Modifier
+                                                            .wrapContentSize()
+                                                            .background(Color.White),
+                                                        textStyle = TextStyle(color = colorPrimary, fontWeight = FontWeight.Bold, fontSize = 16.sp),
+                                                        cursorBrush = SolidColor(colorPrimary)
+                                                    )
+                                                    if (subject.value == "") {
+                                                        Text(
+                                                            text = "Empty subject",
+                                                            style = TextStyle(color = Color.Gray, fontSize = 16.sp),
+                                                            modifier = Modifier
+                                                                .align(Alignment.TopStart)
+                                                        )
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -183,7 +215,6 @@ fun MessageEditScreen(employeeData: EmployeeData, myData : EmployeeData) {
                                             value = text.value,
                                             onValueChange = { text.value = it },
                                             label = { Text("Enter your message", color = Color.Gray) },
-                                            placeholder = { Text("Empty text", color = Color.Gray) },
                                             modifier = Modifier
                                                 .fillMaxSize()
                                                 .background(Color.White),
