@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import com.greenchat.MainActivity
 import com.greenchat.R
 import com.greenchat.fragment.ChatRoomFragment
+import com.greenchat.fragment.MessageEditFragment
 import com.greenchat.fragment.MessageFragment
 import com.greenchat.ui.colorPrimary
 import com.greenchat.ui.ghost_white
@@ -80,7 +81,12 @@ fun MainScreen() {
                                         MessageFragment.newInstance(message, selectedTab),
                                         Constants.MESSAGE_FRAGMENT_TAG
                                     )}
-                                    FloatingButton(openDashboard = {}, Icons.Default.Edit)}//메시지 리스트
+                                    FloatingButton(openDashboard = {
+                                        (activity as MainActivity).addTopFragment(
+                                            MessageEditFragment(),
+                                            Constants.MESSAGE_EDIT_FRAGMENT_TAG
+                                        )
+                                    }, Icons.Default.Edit)}//메시지 리스트
                                 3 -> {} //더보기
                             }
                         }
