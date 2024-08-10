@@ -197,6 +197,10 @@ fun MessageEditScreen(employeeData: EmployeeData, myData : EmployeeData) {
                                         )
                                     }
                                 }
+                                FloatingButton(openDashboard = {
+
+                                },
+                                    image = R.drawable.chat_send)
                             }
                         }
                     }
