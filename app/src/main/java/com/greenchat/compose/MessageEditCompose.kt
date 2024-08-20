@@ -2,6 +2,7 @@ package com.greenchat.compose
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,7 +16,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
@@ -36,8 +36,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -46,25 +44,24 @@ import com.greenchat.data.EmployeeData
 import com.greenchat.ui.colorPrimary
 import com.greenchat.ui.ghost_white
 import com.greenchat.util.Constants
-import java.time.format.DateTimeFormatter
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
-import java.util.ArrayList
+import com.greenchat.MainActivity
+import com.greenchat.fragment.SelectBuddyFragment
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MessageEditScreen(employeeData: EmployeeData, myData : EmployeeData) {
+fun MessageEditScreen(employeeDataList: List<EmployeeData>, myData : EmployeeData) {
+    val activity = LocalContext.current as? MainActivity
     val text = remember { mutableStateOf("") }
     val subject = remember { mutableStateOf("") }
-    val employeeDataList = ArrayList<EmployeeData>()
-    if(employeeData.id != "") employeeDataList.add(employeeData)
     Surface(modifier = Modifier.fillMaxSize()) {
         Scaffold(
-            topBar = { CustomTopAppBar(true, Constants.MESSAGE_EDIT_FRAGMENT_TAG, "Send Message") },
+            topBar = { CustomTopAppBar(true, Constants.MESSAGE_EDIT_FRAGMENT_TAG, Constants.SEND_MESSAGE_TITLE) },
             content = { paddingValues ->
                 Surface(
                     modifier = Modifier
@@ -152,6 +149,21 @@ fun MessageEditScreen(employeeData: EmployeeData, myData : EmployeeData) {
                                                                 fontSize = 16.sp,
                                                                 color = colorPrimary
                                                             )
+                                                        )
+                                                        Image(
+                                                            painter = painterResource(id = R.drawable.plus),
+                                                            contentDescription = "plus Image",
+                                                            modifier = Modifier
+                                                                .size(16.dp)
+                                                                .align(alignment = Alignment.CenterVertically)
+                                                                .clickable(onClick = {
+                                                                    (activity as MainActivity).addTopFragment(
+                                                                        SelectBuddyFragment(),
+                                                                        Constants.SELECT_BUDDY_FRAGMENT_TAG
+                                                                    )
+                                                                }),
+                                                            contentScale = ContentScale.Crop,
+                                                            colorFilter = ColorFilter.tint(colorPrimary)
                                                         )
                                                     }
                                                 }
@@ -244,5 +256,5 @@ fun MessageEditScreen(employeeData: EmployeeData, myData : EmployeeData) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewMessageEditCompose() {
-    MessageEditScreen(EmployeeData.employeeData, EmployeeData.myData)
+    MessageEditScreen(EmployeeData.employeeDataList, EmployeeData.myData)
 }

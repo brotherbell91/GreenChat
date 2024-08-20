@@ -1,13 +1,15 @@
 package com.greenchat.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import com.greenchat.MainActivity
 import com.greenchat.compose.MessageEditScreen
 import com.greenchat.data.EmployeeData
@@ -44,12 +46,20 @@ class MessageEditFragment : Fragment() {
                     }
                 )
 
-                val employeeData = arguments?.getParcelable(ARG_MESSAGE_EDIT) as? EmployeeData
-                if (employeeData == null) {
-                    MessageEditScreen(EmployeeData.emptyData, EmployeeData.myData)
-                } else {
-                    MessageEditScreen(employeeData, EmployeeData.myData)
+                val employeeDataList = remember { mutableStateListOf<EmployeeData>() }
+
+                setFragmentResultListener("buddyRequestKey") { _, bundle ->
+                    val getSelectBuddy = bundle.getParcelable<EmployeeData>("selectBuddy")
+                    if (getSelectBuddy != null) {
+                        employeeDataList.add(getSelectBuddy)
+                    }
                 }
+
+                val employeeData = arguments?.getParcelable(ARG_MESSAGE_EDIT) as? EmployeeData
+                if (employeeData != null) {
+                    employeeDataList.add(employeeData)
+                }
+                MessageEditScreen(employeeDataList, EmployeeData.myData)
             }
         }
     }
