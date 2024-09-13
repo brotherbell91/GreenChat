@@ -58,16 +58,15 @@ import com.greenchat.ui.colorPrimary
 import com.greenchat.ui.ghost_white
 import com.greenchat.ui.image_gray
 import com.greenchat.ui.text_hint_color
-import com.greenchat.util.Constants
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ChatRoomScreen(chatRoomData : ChatRoomData) {
+fun ChatRoomScreen(onEmployeeSelected: () -> Unit, chatRoomData : ChatRoomData, onClose: () -> Unit) {
     Surface(modifier = Modifier.fillMaxSize()) {
         Scaffold(
-            topBar = { CustomTopAppBar(true, Constants.CHATROOM_FRAGMENT_TAG, chatRoomData.name) },
+            topBar = { CustomTopAppBar(true, onClose, chatRoomData.name) },
             content = { paddingValues ->
                 Surface(
                     modifier = Modifier
@@ -306,5 +305,5 @@ fun ChatRoomCustomStyleTextField(
 @Preview(showBackground = true)
 @Composable
 fun PreviewChatRoomScreen() {
-    ChatRoomScreen(ChatRoomData.chat[0])
+    ChatRoomScreen(onEmployeeSelected = {}, ChatRoomData.chatRoom[0], onClose = {})
 }

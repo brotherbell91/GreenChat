@@ -46,20 +46,27 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.greenchat.R
+import com.greenchat.data.ChatRoomData
 import com.greenchat.data.ChatRoomListData
 import com.greenchat.ui.colorPrimary
 import com.greenchat.ui.ghost_white
 import com.greenchat.ui.image_gray
 
 @Composable
-fun ChatListScreen(openDashboard: (ChatRoomListData, Int) -> Unit) {
+fun ChatRoomListScreen(onChatRoomSelected: (ChatRoomData) -> Unit) {
     val tabs = listOf("Chat", "OpenChat")
     var selectedTab = remember { mutableStateOf(0) }
 
-    val chatRooms = if (selectedTab.value == 0) {
+    val chatRoomListData = if (selectedTab.value == 0) {
         ChatRoomListData.chatRooms
     } else {
         ChatRoomListData.openChatRooms
+    }
+
+    val chatRoomData = if (selectedTab.value == 0) {
+        ChatRoomData.chatRoom
+    } else {
+        ChatRoomData.openChatRoom
     }
 
     Column(
@@ -112,29 +119,36 @@ fun ChatListScreen(openDashboard: (ChatRoomListData, Int) -> Unit) {
             }
         }
         Spacer(modifier = Modifier.height(8.dp))
-        ChatRoomList(openDashboard, chatRooms, selectedTab.value)
+        ChatRoomList(onChatRoomSelected, chatRoomListData, chatRoomData)
     }
 }
 
 @Composable
-fun ChatRoomList(openDashboard: (ChatRoomListData, Int) -> Unit, chatRooms: List<ChatRoomListData>, selectedTab: Int) {
+fun ChatRoomList(onChatRoomSelected: (ChatRoomData) -> Unit, chatRoomListData: List<ChatRoomListData>, chatRoomData: List<ChatRoomData>) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        items(chatRooms) { chatRoom ->
-            ChatRoomCard(openDashboard, chatRoom = chatRoom, selectedTab)
+        items(chatRoomListData) { chatRoomListDataOne ->
+            ChatRoomCard(onChatRoomSelected, chatRoomListDataOne, chatRoomData)
         }
     }
 }
 
 @Composable
-fun ChatRoomCard(openDashboard: (ChatRoomListData, Int) -> Unit, chatRoom: ChatRoomListData, selectedTab: Int) {
+fun ChatRoomCard(onChatRoomSelected: (ChatRoomData) -> Unit, chatRoomListDataOne: ChatRoomListData, chatRoomData: List<ChatRoomData>) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(6.dp)
-            .clickable {openDashboard(chatRoom, selectedTab)},
+            .clickable {
+                onChatRoomSelected(
+                    findChatRoomDataById(
+                        chatRoomData,
+                        chatRoomListDataOne.id
+                    )!!
+                )
+            },
         elevation = CardDefaults.cardElevation(4.dp),
         colors = CardDefaults.cardColors(Color.White),
         shape = RoundedCornerShape(16.dp),
@@ -146,7 +160,7 @@ fun ChatRoomCard(openDashboard: (ChatRoomListData, Int) -> Unit, chatRoom: ChatR
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Image(
-                painter = painterResource(id = chatRoom.imageRes),
+                painter = painterResource(id = chatRoomListDataOne.imageRes),
                 contentDescription = null,
                 modifier = Modifier
                     .size(56.dp)
@@ -163,14 +177,14 @@ fun ChatRoomCard(openDashboard: (ChatRoomListData, Int) -> Unit, chatRoom: ChatR
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = chatRoom.name,
+                        text = chatRoomListDataOne.name,
                         fontWeight = FontWeight.Bold,
                         fontSize = 18.sp,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
                     Text(
-                        text = "${chatRoom.participantsCount}",
+                        text = "${chatRoomListDataOne.participantsCount}",
                         fontSize = 14.sp,
                         color = Color.Gray,
                         style = TextStyle(
@@ -180,7 +194,7 @@ fun ChatRoomCard(openDashboard: (ChatRoomListData, Int) -> Unit, chatRoom: ChatR
                     )
                 }
                 Text(
-                    text = "${chatRoom.lastChat}",
+                    text = "${chatRoomListDataOne.lastChat}",
                     fontSize = 14.sp,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
@@ -196,7 +210,7 @@ fun ChatRoomCard(openDashboard: (ChatRoomListData, Int) -> Unit, chatRoom: ChatR
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.Bottom,
                 ) {
-                    if (chatRoom.unreadCount > 0) {
+                    if (chatRoomListDataOne.unreadCount > 0) {
                         Box(
                             modifier = Modifier
                                 .size(20.dp)
@@ -204,7 +218,7 @@ fun ChatRoomCard(openDashboard: (ChatRoomListData, Int) -> Unit, chatRoom: ChatR
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
-                                text = chatRoom.unreadCount.toString(),
+                                text = chatRoomListDataOne.unreadCount.toString(),
                                 color = Color.White,
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 12.sp
@@ -220,7 +234,7 @@ fun ChatRoomCard(openDashboard: (ChatRoomListData, Int) -> Unit, chatRoom: ChatR
                 }
 
                 Text(
-                    text = todayCheck(chatRoom.lastChatTime),
+                    text = todayCheck(chatRoomListDataOne.lastChatTime),
                     fontSize = 12.sp,
                     color = Color.Gray
                 )
@@ -232,5 +246,22 @@ fun ChatRoomCard(openDashboard: (ChatRoomListData, Int) -> Unit, chatRoom: ChatR
 @Preview(showBackground = true)
 @Composable
 fun PreviewChatListScreen() {
-    ChatListScreen(openDashboard = { _, _ -> })
+    ChatRoomListScreen(onChatRoomSelected = {})
+}
+
+private fun findChatRoomDataById(chatRooms: List<ChatRoomData>, id: Int): ChatRoomData? {
+    var low = 0
+    var high = chatRooms.size - 1
+
+    while (low <= high) {
+        val mid = (low + high) / 2
+        val midVal = chatRooms[mid]
+
+        when {
+            midVal.id < id -> low = mid + 1
+            midVal.id > id -> high = mid - 1
+            else -> return midVal
+        }
+    }
+    return null
 }

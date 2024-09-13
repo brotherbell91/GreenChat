@@ -1,6 +1,7 @@
 package com.greenchat.compose
 
 
+import com.greenchat.util.Constants
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -18,14 +19,13 @@ import com.greenchat.data.DepartmentData
 import com.greenchat.data.EmployeeData
 import com.greenchat.ui.colorPrimary
 import com.greenchat.ui.ghost_white
-import com.greenchat.util.Constants
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SelectBuddyScreen(openDashboard: (EmployeeData) -> Unit) {
+fun SelectBuddyScreen(onEmployeeSelected: (EmployeeData) -> Unit, onClose: () -> Unit) {
     Surface(modifier = Modifier.fillMaxSize()) {
         Scaffold(
-            topBar = { CustomTopAppBar(true, Constants.SELECT_BUDDY_FRAGMENT_TAG, Constants.SELECT_BUDDY_TITLE) },
+            topBar = { CustomTopAppBar(true, onClose, Constants.SELECT_BUDDY_TITLE) },
             content = { paddingValues ->
                 Surface(
                     modifier = Modifier
@@ -43,9 +43,7 @@ fun SelectBuddyScreen(openDashboard: (EmployeeData) -> Unit) {
                                 .padding(24.dp)
                                 .fillMaxSize(),
                         ) {
-                            DepartmentScreen(openDashboard = { employee ->
-                                openDashboard(employee)
-                            }, department = DepartmentData.organizationDepartment)
+                            DepartmentScreen(onEmployeeSelected, department = DepartmentData.organizationDepartment)
                         }
                     }
                 }
@@ -57,5 +55,5 @@ fun SelectBuddyScreen(openDashboard: (EmployeeData) -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewSelectBuddyScreen() {
-    SelectBuddyScreen(openDashboard = {})
+    SelectBuddyScreen(onEmployeeSelected = {}, onClose = {})
 }

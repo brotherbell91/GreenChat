@@ -11,14 +11,14 @@ import com.greenchat.data.DepartmentData
 import com.greenchat.data.EmployeeData
 
 @Composable
-fun BuddyScreen(openDashboard: (EmployeeData) -> Unit, department: DepartmentData) {
+fun BuddyScreen(onEmployeeSelected: (EmployeeData) -> Unit, department: DepartmentData) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .padding(8.dp)
     ) {
         item {
-            DepartmentHierarchy(openDashboard, department)
+            DepartmentHierarchy(onEmployeeSelected, department)
         }
     }
 }
@@ -26,5 +26,5 @@ fun BuddyScreen(openDashboard: (EmployeeData) -> Unit, department: DepartmentDat
 @Preview(showBackground = true)
 @Composable
 fun PreviewBuddyScreen() {
-    BuddyScreen(openDashboard = {}, DepartmentData.organizationBuddy)
+    BuddyScreen(onEmployeeSelected = {}, DepartmentData.organizationBuddy)
 }

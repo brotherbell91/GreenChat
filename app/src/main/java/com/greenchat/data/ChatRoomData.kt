@@ -12,7 +12,7 @@ data class ChatRoomData(
     var chats: List<ChatData> = emptyList(),
 ) {
     companion object{
-        val chat = listOf(
+        val chatRoom = listOf(
             ChatRoomData(
                 id = 1,
                 imageRes = R.drawable.profile,
@@ -175,7 +175,7 @@ data class ChatRoomData(
             ),
         )
 
-        val openChat = listOf(
+        val openChatRoom = listOf(
             ChatRoomData(
                 id = 1,
                 imageRes = R.drawable.profile,

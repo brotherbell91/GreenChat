@@ -47,13 +47,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.greenchat.R
+import com.greenchat.data.MessageData
 import com.greenchat.data.MessageListData
 import com.greenchat.ui.colorPrimary
 import com.greenchat.ui.ghost_white
 import com.greenchat.ui.image_gray
 
 @Composable
-fun MessageListScreen(openDashboard: (MessageListData, Int) -> Unit) {
+fun MessageListScreen(onMessageSelected: (MessageData) -> Unit) {
     val tabs = listOf("ReceiveMessage", "SendMessage")
     var selectedTab = remember { mutableStateOf(0) }
 
@@ -113,29 +114,30 @@ fun MessageListScreen(openDashboard: (MessageListData, Int) -> Unit) {
             }
         }
         Spacer(modifier = Modifier.height(8.dp))
-        MessageList(openDashboard, messages, selectedTab.value)
+        MessageList(onMessageSelected, messages, selectedTab.value)
     }
 }
 
 @Composable
-fun MessageList(openDashboard: (MessageListData, Int) -> Unit, messages: List<MessageListData>, selectedTab: Int) {
+fun MessageList(onMessageSelected: (MessageData) -> Unit, messages: List<MessageListData>, selectedTab : Int) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         items(messages) { message ->
-            MessageCard(openDashboard, message = message, selectedTab)
+            MessageCard(onMessageSelected, message, selectedTab)
         }
     }
 }
 
 @Composable
-fun MessageCard(openDashboard: (MessageListData, Int) -> Unit, message: MessageListData, selectedTab: Int) {
+fun MessageCard(onMessageSelected: (MessageData) -> Unit, message: MessageListData, selectedTab : Int) {
+    val messages = if (selectedTab == 0) MessageData.receiveMessage else MessageData.sendMessage
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(6.dp)
-            .clickable {openDashboard(message, selectedTab)},
+            .clickable {onMessageSelected(findMessageDataById(messages, message.id)!!)},
         elevation = CardDefaults.cardElevation(4.dp),
         colors = CardDefaults.cardColors(Color.White),
         shape = RoundedCornerShape(16.dp),
@@ -247,5 +249,22 @@ fun MessageCard(openDashboard: (MessageListData, Int) -> Unit, message: MessageL
 @Preview(showBackground = true)
 @Composable
 fun PreviewMessageListScreen() {
-    MessageListScreen(openDashboard = { _, _ -> })
+    MessageListScreen(onMessageSelected = {})
+}
+
+private fun findMessageDataById(messages: List<MessageData>, id: Int): MessageData? {
+    var low = 0
+    var high = messages.size - 1
+
+    while (low <= high) {
+        val mid = (low + high) / 2
+        val midVal = messages[mid]
+
+        when {
+            midVal.id < id -> low = mid + 1
+            midVal.id > id -> high = mid - 1
+            else -> return midVal
+        }
+    }
+    return null
 }

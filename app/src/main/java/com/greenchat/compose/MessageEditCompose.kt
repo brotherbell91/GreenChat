@@ -43,25 +43,21 @@ import com.greenchat.R
 import com.greenchat.data.EmployeeData
 import com.greenchat.ui.colorPrimary
 import com.greenchat.ui.ghost_white
-import com.greenchat.util.Constants
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
-import com.greenchat.MainActivity
-import com.greenchat.fragment.SelectBuddyFragment
+import com.greenchat.util.Constants
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MessageEditScreen(employeeDataList: List<EmployeeData>, myData : EmployeeData) {
-    val activity = LocalContext.current as? MainActivity
+fun MessageEditScreen(onEmployeeSelected: () -> Unit, employeeDataList: List<EmployeeData>, myData : EmployeeData, onClose: () -> Unit) {
     val text = remember { mutableStateOf("") }
     val subject = remember { mutableStateOf("") }
     Surface(modifier = Modifier.fillMaxSize()) {
         Scaffold(
-            topBar = { CustomTopAppBar(true, Constants.MESSAGE_EDIT_FRAGMENT_TAG, Constants.SEND_MESSAGE_TITLE) },
+            topBar = { CustomTopAppBar(true, onClose, Constants.SEND_MESSAGE_TITLE) },
             content = { paddingValues ->
                 Surface(
                     modifier = Modifier
@@ -156,12 +152,7 @@ fun MessageEditScreen(employeeDataList: List<EmployeeData>, myData : EmployeeDat
                                                             modifier = Modifier
                                                                 .size(16.dp)
                                                                 .align(alignment = Alignment.CenterVertically)
-                                                                .clickable(onClick = {
-                                                                    (activity as MainActivity).addTopFragment(
-                                                                        SelectBuddyFragment(),
-                                                                        Constants.SELECT_BUDDY_FRAGMENT_TAG
-                                                                    )
-                                                                }),
+                                                                .clickable(onClick = {onEmployeeSelected()}),
                                                             contentScale = ContentScale.Crop,
                                                             colorFilter = ColorFilter.tint(colorPrimary)
                                                         )
@@ -256,5 +247,5 @@ fun MessageEditScreen(employeeDataList: List<EmployeeData>, myData : EmployeeDat
 @Preview(showBackground = true)
 @Composable
 fun PreviewMessageEditCompose() {
-    MessageEditScreen(EmployeeData.employeeDataList, EmployeeData.myData)
+    MessageEditScreen(onEmployeeSelected = {}, EmployeeData.employeeDataList, EmployeeData.myData, onClose = {})
 }

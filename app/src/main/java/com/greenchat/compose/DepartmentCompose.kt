@@ -38,20 +38,20 @@ import com.greenchat.data.DepartmentData
 import com.greenchat.data.EmployeeData
 
 @Composable
-fun DepartmentScreen(openDashboard: (EmployeeData) -> Unit, department: DepartmentData) {
+fun DepartmentScreen(onEmployeeSelected: (EmployeeData) -> Unit, department: DepartmentData) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .padding(8.dp)
     ) {
         item {
-            DepartmentHierarchy(openDashboard, department)
+            DepartmentHierarchy(onEmployeeSelected, department)
         }
     }
 }
 
 @Composable
-fun DepartmentHierarchy(openDashboard: (EmployeeData) -> Unit, department: DepartmentData) {
+fun DepartmentHierarchy(onEmployeeSelected: (EmployeeData) -> Unit, department: DepartmentData) {
     var expanded by remember { mutableStateOf(true) }
 
     Column(
@@ -67,12 +67,11 @@ fun DepartmentHierarchy(openDashboard: (EmployeeData) -> Unit, department: Depar
                 elevation = CardDefaults.cardElevation(4.dp),
             ){
                 department.employees.forEachIndexed {index, employee ->
-                    val isLast = index == department.employees.lastIndex
-                    EmployeeCard(openDashboard, employee, isLast)
+                    EmployeeCard(onEmployeeSelected, employee)
                 }
             }
             department.subDepartments.forEach { subDepartment ->
-                DepartmentHierarchy(openDashboard, subDepartment)
+                DepartmentHierarchy(onEmployeeSelected, subDepartment)
             }
             if(department.subDepartments.isEmpty() && department.employees.isEmpty()){
                 EmptyCard()
@@ -146,12 +145,12 @@ fun DepartmentCard(department: DepartmentData, expanded: Boolean, onClick: () ->
 }
 
 @Composable
-fun EmployeeCard(openDashboard: (EmployeeData) -> Unit, employee: EmployeeData, isLast: Boolean) {
+fun EmployeeCard(onEmployeeSelected: (EmployeeData) -> Unit, employee: EmployeeData) {
     Card(
         shape = RoundedCornerShape(16.dp),
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { openDashboard(employee) }
+            .clickable { onEmployeeSelected(employee) }
             .background(Color.Transparent),
         colors = CardDefaults.cardColors(containerColor = Color.Transparent)
     ) {
@@ -178,9 +177,6 @@ fun EmployeeCard(openDashboard: (EmployeeData) -> Unit, employee: EmployeeData, 
                 )
             }
         }
-//        if (isLast) {
-//            Divider(color = under_line, thickness = 1.dp, modifier = Modifier.padding(horizontal = 18.dp))
-//        }
     }
 }
 
@@ -208,5 +204,5 @@ fun ProfileImage(image: Painter) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewDepartmentScreen() {
-    DepartmentScreen(openDashboard = {}, DepartmentData.organizationDepartment)
+    DepartmentScreen(onEmployeeSelected = {}, DepartmentData.organizationDepartment)
 }

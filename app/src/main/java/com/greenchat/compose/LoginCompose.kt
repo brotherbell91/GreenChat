@@ -49,7 +49,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.greenchat.R
+import com.greenchat.navigation.Screen
 import com.greenchat.ui.JetPackComposeTheme
 import com.greenchat.ui.colorPrimary
 import com.greenchat.ui.dark_gray
@@ -58,7 +61,7 @@ import com.greenchat.ui.gray
 import com.greenchat.ui.light_gray
 
 @Composable
-fun LoginScreen(openDashboard: () -> Unit) {
+fun LoginScreen(navController: NavController) {
     JetPackComposeTheme {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
@@ -163,7 +166,7 @@ fun LoginScreen(openDashboard: () -> Unit) {
                                 style = MaterialTheme.typography.titleSmall.copy(color = colorPrimary)
                             )
                             Button(
-                                onClick = openDashboard,
+                                onClick = {navController.navigate(Screen.Splash.route)},
                                 modifier = Modifier
                                     .padding(top = 30.dp, bottom = 34.dp)
                                     .align(Alignment.CenterHorizontally)
@@ -311,5 +314,5 @@ fun LoginHeaderView() {
 @Preview(showBackground = true)
 @Composable
 fun PreviewLoginScreen() {
-    LoginScreen(openDashboard = {})
+    LoginScreen(navController = rememberNavController())
 }

@@ -2,9 +2,7 @@ package com.greenchat.compose
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Arrangement import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,33 +16,30 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.greenchat.R
 import com.greenchat.data.PermissionData
+import com.greenchat.navigation.Screen
 import com.greenchat.ui.colorPrimary
 import com.greenchat.ui.dark_gray
 import com.greenchat.ui.ghost_white
@@ -52,10 +47,10 @@ import com.greenchat.ui.ghost_white
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PermissionScreen(openDashboard: () -> Unit) {
+fun PermissionScreen(navController: NavController) {
     Surface(modifier = Modifier.fillMaxSize()) {
         Scaffold(
-            topBar = {CustomTopAppBar(false)},
+            topBar = {CustomTopAppBar(false, onClose = {})},
             content = { paddingValues ->
                 Surface(
                     modifier = Modifier
@@ -111,7 +106,7 @@ fun PermissionScreen(openDashboard: () -> Unit) {
                                 .padding(start = 30.dp, end = 30.dp, top = 15.dp, bottom = 15.dp)
                         ){
                             Button(
-                                onClick = openDashboard,
+                                onClick = {navController.navigate(Screen.Login.route)},
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .height(52.dp),
@@ -184,5 +179,5 @@ fun PermissionItem(permission: PermissionData) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewPermissionScreen() {
-    PermissionScreen(openDashboard = {})
+    PermissionScreen(navController = rememberNavController())
 }
