@@ -103,7 +103,7 @@ fun ProfileScreen(employeeData : EmployeeData, onClose: () -> Unit) {
                                 Image(
                                     modifier = Modifier
                                         .size(50.dp)
-                                        .clickable {}
+                                        .clickable { }
                                         .clip((CircleShape)),
                                     bitmap = ImageBitmap.imageResource(id = R.drawable.message),
                                     contentScale = ContentScale.Crop,
@@ -112,10 +112,10 @@ fun ProfileScreen(employeeData : EmployeeData, onClose: () -> Unit) {
                                 )
                                 Image(
                                     modifier = Modifier
-                                        .size(50.dp)
+                                        .size(45.dp)
                                         .clickable { }
                                         .clip((CircleShape)),
-                                    bitmap = ImageBitmap.imageResource(id = R.drawable.department),
+                                    bitmap = ImageBitmap.imageResource(id = R.drawable.phone),
                                     contentScale = ContentScale.Crop,
                                     colorFilter = ColorFilter.tint(colorPrimary),
                                     contentDescription = "Add Employee"
