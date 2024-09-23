@@ -160,29 +160,6 @@ fun ProfileScreen(employeeData : EmployeeData, onClose: () -> Unit) {
 }
 
 @Composable
-fun ProfileHeaderView() {
-    Image(
-        modifier = Modifier.fillMaxSize(),
-        bitmap = ImageBitmap.imageResource(id = R.drawable.login_bg),
-        contentScale = ContentScale.FillWidth,
-        contentDescription = "header_view_login_bg"
-    )
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.padding(bottom = 40.dp)
-    ) {
-        Image(
-            modifier = Modifier
-                .size(100.dp)
-                .clip((CircleShape)),
-            bitmap = ImageBitmap.imageResource(id = R.drawable.profile),
-            contentScale = ContentScale.Crop,
-            contentDescription = "header_view_profile"
-        )
-    }
-}
-
-@Composable
 fun ProfileItem(itemTitle: String, itemValue: String) {
     Card(
         modifier = Modifier
