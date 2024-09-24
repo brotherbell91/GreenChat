@@ -59,6 +59,16 @@ fun HomeScreen() {
 
     selectedEmployee?.let { employeeData ->
         ProfileScreen(
+            onProfileChatRoomSelected = {
+                selectEmployeeList += employeeData
+                showChatRoomScreen = true
+                selectedEmployee = null
+            },
+            onProfileMessageSelected = {
+                selectEmployeeList += employeeData
+                showMessageEditScreen = true
+                selectedEmployee = null
+            },
             employeeData = employeeData,
             onClose = { selectedEmployee = null }
         )

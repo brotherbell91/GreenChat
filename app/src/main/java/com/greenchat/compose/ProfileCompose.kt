@@ -44,7 +44,7 @@ import com.greenchat.ui.ghost_white
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfileScreen(employeeData : EmployeeData, onClose: () -> Unit) {
+fun ProfileScreen(onProfileChatRoomSelected: () -> Unit, onProfileMessageSelected: () -> Unit ,employeeData : EmployeeData, onClose: () -> Unit) {
     Surface(modifier = Modifier.fillMaxSize()) {
         Scaffold(
             topBar = { CustomTopAppBar(true, onClose, employeeData.name) },
@@ -93,7 +93,7 @@ fun ProfileScreen(employeeData : EmployeeData, onClose: () -> Unit) {
                                 Image(
                                     modifier = Modifier
                                         .size(50.dp)
-                                        .clickable { }
+                                        .clickable { onProfileChatRoomSelected() }
                                         .clip((CircleShape)),
                                     bitmap = ImageBitmap.imageResource(id = R.drawable.chat),
                                     contentScale = ContentScale.Crop,
@@ -103,7 +103,7 @@ fun ProfileScreen(employeeData : EmployeeData, onClose: () -> Unit) {
                                 Image(
                                     modifier = Modifier
                                         .size(50.dp)
-                                        .clickable { }
+                                        .clickable { onProfileMessageSelected() }
                                         .clip((CircleShape)),
                                     bitmap = ImageBitmap.imageResource(id = R.drawable.message),
                                     contentScale = ContentScale.Crop,
@@ -194,7 +194,7 @@ fun ProfileItem(itemTitle: String, itemValue: String) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewProfileScreen() {
-    ProfileScreen(DepartmentData.organizationDepartment.employees.get(0), onClose = {})
+    ProfileScreen(onProfileChatRoomSelected = {}, onProfileMessageSelected = {}, DepartmentData.organizationDepartment.employees.get(0), onClose = {})
 }
 
 @Preview(showBackground = true)
