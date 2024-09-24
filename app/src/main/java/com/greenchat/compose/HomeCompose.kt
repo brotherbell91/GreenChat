@@ -13,6 +13,7 @@ import com.greenchat.data.ChatRoomData
 import com.greenchat.data.EmployeeData
 import com.greenchat.data.MessageData
 import com.greenchat.navigation.NavigationHome
+import com.greenchat.viewmodel.MyViewModel
 
 enum class SelectBuddyScreenType {
     CHAT_ROOM, MESSAGE
@@ -23,7 +24,10 @@ object BackPressHandler {
 }
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(viewModel: MyViewModel) {
+    val myData by viewModel.myData.collectAsState()
+    val chatRoomData by viewModel.chatRoomData.collectAsState()
+
     var selectedEmployee by remember { mutableStateOf<EmployeeData?>(null) }
     var selectedChatRoom by remember { mutableStateOf<ChatRoomData?>(null) }
     var selectedMessage by remember { mutableStateOf<MessageData?>(null) }
@@ -37,6 +41,7 @@ fun HomeScreen() {
 
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         NavigationHome(
+            viewModel,
             onEmployeeSelected = { employee ->
                 selectedEmployee = employee
             },
@@ -91,7 +96,7 @@ fun HomeScreen() {
     if(showChatRoomScreen){
         ChatRoomScreen(onEmployeeSelected = { /*TODO*/ }, //방안에서 직원 추가
             chatRoomData = ChatRoomData(
-                id = ChatRoomData.chatRoom.size,
+                id = chatRoomData.size,
                 imageRes = R.drawable.profile,
                 name = selectEmployeeList[0].name,
                 participantsCount = 1,
@@ -108,7 +113,7 @@ fun HomeScreen() {
     if(showMessageEditScreen){
         MessageEditScreen(onEmployeeSelected = { showSelectBuddyScreen = true },
             employeeDataList = selectEmployeeList,
-            myData = EmployeeData.myData,
+            myData = myData!!,
             onClose = {
                 showMessageEditScreen = false
                 selectEmployeeList = emptyList()
@@ -118,6 +123,7 @@ fun HomeScreen() {
 
     if (showSelectBuddyScreen) {
         SelectBuddyScreen(
+            viewModel,
             onEmployeeSelected = { employee ->
                 when (selectBuddyScreenType) {
                     SelectBuddyScreenType.CHAT_ROOM -> {

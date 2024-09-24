@@ -27,6 +27,8 @@ import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -45,28 +47,34 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.greenchat.R
 import com.greenchat.data.ChatRoomData
 import com.greenchat.data.ChatRoomListData
 import com.greenchat.ui.colorPrimary
 import com.greenchat.ui.ghost_white
 import com.greenchat.ui.image_gray
+import com.greenchat.viewmodel.MyViewModel
 
 @Composable
-fun ChatRoomListScreen(onChatRoomSelected: (ChatRoomData) -> Unit) {
+fun ChatRoomListScreen(onChatRoomSelected: (ChatRoomData) -> Unit, viewModel: MyViewModel) {
     val tabs = listOf("Chat", "OpenChat")
     var selectedTab = remember { mutableStateOf(0) }
+    val chatRoomListData by viewModel.chatRoomListData.collectAsState()
+    val openChatRoomListData by viewModel.openChatRoomListData.collectAsState()
+    val chatRoomData by viewModel.chatRoomData.collectAsState()
+    val openChatRoomData by viewModel.openChatRoomData.collectAsState()
 
-    val chatRoomListData = if (selectedTab.value == 0) {
-        ChatRoomListData.chatRooms
+    val selectedChatRoomListData = if (selectedTab.value == 0) {
+        chatRoomListData
     } else {
-        ChatRoomListData.openChatRooms
+        openChatRoomListData
     }
 
-    val chatRoomData = if (selectedTab.value == 0) {
-        ChatRoomData.chatRoom
+    val selectedChatRoomData = if (selectedTab.value == 0) {
+        chatRoomData
     } else {
-        ChatRoomData.openChatRoom
+        openChatRoomData
     }
 
     Column(
@@ -119,7 +127,7 @@ fun ChatRoomListScreen(onChatRoomSelected: (ChatRoomData) -> Unit) {
             }
         }
         Spacer(modifier = Modifier.height(8.dp))
-        ChatRoomList(onChatRoomSelected, chatRoomListData, chatRoomData)
+        ChatRoomList(onChatRoomSelected, selectedChatRoomListData, selectedChatRoomData)
     }
 }
 
@@ -246,7 +254,7 @@ fun ChatRoomCard(onChatRoomSelected: (ChatRoomData) -> Unit, chatRoomListDataOne
 @Preview(showBackground = true)
 @Composable
 fun PreviewChatListScreen() {
-    ChatRoomListScreen(onChatRoomSelected = {})
+    ChatRoomListScreen(onChatRoomSelected = {}, viewModel = viewModel())
 }
 
 private fun findChatRoomDataById(chatRooms: List<ChatRoomData>, id: Int): ChatRoomData? {

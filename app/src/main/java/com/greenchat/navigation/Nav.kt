@@ -23,7 +23,6 @@ import com.greenchat.compose.MessageListScreen
 import com.greenchat.compose.MoreScreen
 import com.greenchat.compose.OrganizationScreen
 import com.greenchat.compose.PermissionScreen
-import com.greenchat.compose.SelectBuddyScreen
 import com.greenchat.compose.SplashScreen
 import com.greenchat.data.ChatRoomData
 import com.greenchat.data.EmployeeData
@@ -50,13 +49,14 @@ fun NavigationMain(viewModel: MyViewModel) {
         composable(Screen.Permission.route) { PermissionScreen(navController, viewModel) }
         composable(Screen.Login.route) { LoginScreen(navController) }
         composable(Screen.Splash.route) { SplashScreen(navController) }
-        composable(Screen.Home.route) { HomeScreen() }
+        composable(Screen.Home.route) { HomeScreen(viewModel) }
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NavigationHome(
+    viewModel: MyViewModel,
     onEmployeeSelected: (EmployeeData) -> Unit,
     onChatRoomSelected: (ChatRoomData) -> Unit,
     onMessageSelected: (MessageData) -> Unit,
@@ -76,12 +76,12 @@ fun NavigationHome(
                 .padding(innerPadding)
                 .background(ghost_white)
         ) {
-            composable(Screen.Organization.route) { OrganizationScreen(onEmployeeSelected) }
-            composable(Screen.ChatList.route) { ChatRoomListScreen(onChatRoomSelected)
+            composable(Screen.Organization.route) { OrganizationScreen(onEmployeeSelected, viewModel) }
+            composable(Screen.ChatList.route) { ChatRoomListScreen(onChatRoomSelected, viewModel)
                 FloatingButton(openDashboard = {onFloatingChatRoomSelected()}, image = Icons.Default.Add)}
-            composable(Screen.MessageList.route) { MessageListScreen(onMessageSelected)
+            composable(Screen.MessageList.route) { MessageListScreen(onMessageSelected, viewModel)
                 FloatingButton(openDashboard = {onFloatingMessageSelected()}, image = Icons.Default.Edit)}
-            composable(Screen.More.route) { MoreScreen() }
+            composable(Screen.More.route) { MoreScreen(viewModel) }
         }
     }
 }

@@ -27,6 +27,8 @@ import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -46,22 +48,34 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.greenchat.R
 import com.greenchat.data.MessageData
 import com.greenchat.data.MessageListData
 import com.greenchat.ui.colorPrimary
 import com.greenchat.ui.ghost_white
 import com.greenchat.ui.image_gray
+import com.greenchat.viewmodel.MyViewModel
 
 @Composable
-fun MessageListScreen(onMessageSelected: (MessageData) -> Unit) {
+fun MessageListScreen(onMessageSelected: (MessageData) -> Unit, viewModel: MyViewModel) {
     val tabs = listOf("ReceiveMessage", "SendMessage")
     var selectedTab = remember { mutableStateOf(0) }
+    val receiveMessageListData by viewModel.receiveMessageListData.collectAsState()
+    val sendMessageListData by viewModel.sendMessageListData.collectAsState()
+    val receiveMessageData by viewModel.receiveMessageData.collectAsState()
+    val sendMessageData by viewModel.sendMessageData.collectAsState()
 
-    val messages = if (selectedTab.value == 0) {
-        MessageListData.receiveMessages
+    val selectedMessageListData = if (selectedTab.value == 0) {
+        receiveMessageListData
     } else {
-        MessageListData.sendMessages
+        sendMessageListData
+    }
+
+    val selectedMessageData = if (selectedTab.value == 0) {
+        receiveMessageData
+    } else {
+        sendMessageData
     }
 
     Column(
@@ -114,30 +128,29 @@ fun MessageListScreen(onMessageSelected: (MessageData) -> Unit) {
             }
         }
         Spacer(modifier = Modifier.height(8.dp))
-        MessageList(onMessageSelected, messages, selectedTab.value)
+        MessageList(onMessageSelected, selectedMessageListData, selectedMessageData, selectedTab.value)
     }
 }
 
 @Composable
-fun MessageList(onMessageSelected: (MessageData) -> Unit, messages: List<MessageListData>, selectedTab : Int) {
+fun MessageList(onMessageSelected: (MessageData) -> Unit, messageListData: List<MessageListData>, messageData: List<MessageData>,selectedTab : Int) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        items(messages) { message ->
-            MessageCard(onMessageSelected, message, selectedTab)
+        items(messageListData) { aMessageListData ->
+            MessageCard(onMessageSelected, aMessageListData, messageData, selectedTab)
         }
     }
 }
 
 @Composable
-fun MessageCard(onMessageSelected: (MessageData) -> Unit, message: MessageListData, selectedTab : Int) {
-    val messages = if (selectedTab == 0) MessageData.receiveMessage else MessageData.sendMessage
+fun MessageCard(onMessageSelected: (MessageData) -> Unit, messageListData: MessageListData, messageData: List<MessageData>,selectedTab : Int) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(6.dp)
-            .clickable {onMessageSelected(findMessageDataById(messages, message.id)!!)},
+            .clickable {onMessageSelected(findMessageDataById(messageData, messageListData.id)!!)},
         elevation = CardDefaults.cardElevation(4.dp),
         colors = CardDefaults.cardColors(Color.White),
         shape = RoundedCornerShape(16.dp),
@@ -149,7 +162,7 @@ fun MessageCard(onMessageSelected: (MessageData) -> Unit, message: MessageListDa
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Image(
-                painter = painterResource(id = message.imageRes),
+                painter = painterResource(id = messageListData.imageRes),
                 contentDescription = null,
                 modifier = Modifier
                     .size(56.dp)
@@ -166,9 +179,9 @@ fun MessageCard(onMessageSelected: (MessageData) -> Unit, message: MessageListDa
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     var text = if (selectedTab == 0){
-                        message.sender
+                        messageListData.sender
                     } else{
-                        message.receiver
+                        messageListData.receiver
                     }
 
                     val textLength = text.length
@@ -184,7 +197,7 @@ fun MessageCard(onMessageSelected: (MessageData) -> Unit, message: MessageListDa
                     )
 
                     Text(
-                        text = "${message.receiverCount}",
+                        text = "${messageListData.receiverCount}",
                         fontSize = 14.sp,
                         color = Color.Gray,
                         style = TextStyle(
@@ -194,7 +207,7 @@ fun MessageCard(onMessageSelected: (MessageData) -> Unit, message: MessageListDa
                     )
                 }
                 Text(
-                    text = "${message.name}",
+                    text = "${messageListData.name}",
                     fontSize = 14.sp,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
@@ -210,7 +223,7 @@ fun MessageCard(onMessageSelected: (MessageData) -> Unit, message: MessageListDa
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.Bottom,
                 ) {
-                    if (message.unread > 0) {
+                    if (messageListData.unread > 0) {
                         Box(
                             modifier = Modifier
                                 .size(20.dp)
@@ -237,7 +250,7 @@ fun MessageCard(onMessageSelected: (MessageData) -> Unit, message: MessageListDa
                 }
 
                 Text(
-                    text = todayCheck(message.time),
+                    text = todayCheck(messageListData.time),
                     fontSize = 12.sp,
                     color = Color.Gray
                 )
@@ -249,7 +262,7 @@ fun MessageCard(onMessageSelected: (MessageData) -> Unit, message: MessageListDa
 @Preview(showBackground = true)
 @Composable
 fun PreviewMessageListScreen() {
-    MessageListScreen(onMessageSelected = {})
+    MessageListScreen(onMessageSelected = {}, viewModel = viewModel())
 }
 
 private fun findMessageDataById(messages: List<MessageData>, id: Int): MessageData? {

@@ -12,17 +12,22 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.greenchat.data.DepartmentData
 import com.greenchat.data.EmployeeData
 import com.greenchat.ui.colorPrimary
 import com.greenchat.ui.ghost_white
+import com.greenchat.viewmodel.MyViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SelectBuddyScreen(onEmployeeSelected: (EmployeeData) -> Unit, onClose: () -> Unit) {
+fun SelectBuddyScreen(viewModel : MyViewModel, onEmployeeSelected: (EmployeeData) -> Unit, onClose: () -> Unit) {
+    val departmentData by viewModel.departmentData.collectAsState()
     Surface(modifier = Modifier.fillMaxSize()) {
         Scaffold(
             topBar = { CustomTopAppBar(true, onClose, Constants.SELECT_BUDDY_TITLE) },
@@ -43,7 +48,7 @@ fun SelectBuddyScreen(onEmployeeSelected: (EmployeeData) -> Unit, onClose: () ->
                                 .padding(24.dp)
                                 .fillMaxSize(),
                         ) {
-                            DepartmentScreen(onEmployeeSelected, department = DepartmentData.organizationDepartment)
+                            DepartmentScreen(onEmployeeSelected, department = departmentData!!)
                         }
                     }
                 }
@@ -55,5 +60,5 @@ fun SelectBuddyScreen(onEmployeeSelected: (EmployeeData) -> Unit, onClose: () ->
 @Preview(showBackground = true)
 @Composable
 fun PreviewSelectBuddyScreen() {
-    SelectBuddyScreen(onEmployeeSelected = {}, onClose = {})
+    SelectBuddyScreen(viewModel = viewModel(), onEmployeeSelected = {}, onClose = {})
 }

@@ -6,6 +6,7 @@ import com.greenchat.data.ChatData
 import com.greenchat.data.ChatRoomData
 import com.greenchat.data.ChatRoomListData
 import com.greenchat.data.DepartmentData
+import com.greenchat.data.EmployeeData
 import com.greenchat.data.MessageData
 import com.greenchat.data.MessageListData
 import com.greenchat.data.PermissionData
@@ -16,18 +17,28 @@ import kotlinx.coroutines.launch
 class MyViewModel : ViewModel() {
     private val _permissionData = MutableStateFlow<List<PermissionData>>(emptyList())
     val permissionData = _permissionData.asStateFlow()
-    private val _departmentData = MutableStateFlow<List<DepartmentData>>(emptyList())
+    private val _myData = MutableStateFlow<EmployeeData?>(null)
+    val myData = _myData.asStateFlow()
+    private val _departmentData = MutableStateFlow<DepartmentData?>(null)
     val departmentData = _departmentData.asStateFlow()
-    private val _buddyData = MutableStateFlow<List<DepartmentData>>(emptyList())
+    private val _buddyData = MutableStateFlow<DepartmentData?>(null)
     val buddyData = _buddyData.asStateFlow()
     private val _chatRoomData = MutableStateFlow<List<ChatRoomData>>(emptyList())
     val chatRoomData = _chatRoomData.asStateFlow()
+    private val _openChatRoomData = MutableStateFlow<List<ChatRoomData>>(emptyList())
+    val openChatRoomData = _openChatRoomData.asStateFlow()
     private val _chatRoomListData = MutableStateFlow<List<ChatRoomListData>>(emptyList())
     val chatRoomListData = _chatRoomListData.asStateFlow()
-    private val _messageData = MutableStateFlow<List<MessageData>>(emptyList())
-    val messageData = _messageData.asStateFlow()
-    private val _messageListData = MutableStateFlow<List<MessageListData>>(emptyList())
-    val messageListData = _messageListData.asStateFlow()
+    private val _openChatRoomListData = MutableStateFlow<List<ChatRoomListData>>(emptyList())
+    val openChatRoomListData = _openChatRoomListData.asStateFlow()
+    private val _receiveMessageData = MutableStateFlow<List<MessageData>>(emptyList())
+    val receiveMessageData = _receiveMessageData.asStateFlow()
+    private val _sendMessageData = MutableStateFlow<List<MessageData>>(emptyList())
+    val sendMessageData = _sendMessageData.asStateFlow()
+    private val _receiveMessageListData = MutableStateFlow<List<MessageListData>>(emptyList())
+    val receiveMessageListData = _receiveMessageListData.asStateFlow()
+    private val _sendMessageListData = MutableStateFlow<List<MessageListData>>(emptyList())
+    val sendMessageListData = _sendMessageListData.asStateFlow()
 
     init {
         loadMessages()
@@ -35,8 +46,18 @@ class MyViewModel : ViewModel() {
 
     private fun loadMessages() {
         viewModelScope.launch {
-            //로컬영역 추가시
             _permissionData.value = PermissionData.permissions
+            _myData.value = EmployeeData.myData
+            _departmentData.value = DepartmentData.organizationDepartment
+            _buddyData.value = DepartmentData.organizationBuddy
+            _chatRoomData.value = ChatRoomData.chatRoom
+            _openChatRoomData.value = ChatRoomData.openChatRoom
+            _chatRoomListData.value = ChatRoomListData.chatRooms
+            _openChatRoomListData.value = ChatRoomListData.openChatRooms
+            _receiveMessageData.value = MessageData.receiveMessage
+            _sendMessageData.value = MessageData.sendMessage
+            _receiveMessageListData.value = MessageListData.receiveMessages
+            _sendMessageListData.value = MessageListData.sendMessages
         }
     }
 
