@@ -51,6 +51,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.greenchat.R
 import com.greenchat.data.ChatData
 import com.greenchat.data.ChatRoomData
@@ -58,12 +59,13 @@ import com.greenchat.ui.colorPrimary
 import com.greenchat.ui.ghost_white
 import com.greenchat.ui.image_gray
 import com.greenchat.ui.text_hint_color
+import com.greenchat.viewmodel.MyViewModel
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ChatRoomScreen(onEmployeeSelected: () -> Unit, chatRoomData : ChatRoomData, onClose: () -> Unit) {
+fun ChatRoomScreen(viewModel: MyViewModel, onEmployeeSelected: () -> Unit, chatRoomData : ChatRoomData, onClose: () -> Unit) {
     Surface(modifier = Modifier.fillMaxSize()) {
         Scaffold(
             topBar = { CustomTopAppBar(true, onClose, chatRoomData.name) },
@@ -305,5 +307,5 @@ fun ChatRoomCustomStyleTextField(
 @Preview(showBackground = true)
 @Composable
 fun PreviewChatRoomScreen() {
-    ChatRoomScreen(onEmployeeSelected = {}, ChatRoomData.chatRoom[0], onClose = {})
+    ChatRoomScreen(viewModel = viewModel(), onEmployeeSelected = {}, ChatRoomData.chatRoom[0], onClose = {})
 }

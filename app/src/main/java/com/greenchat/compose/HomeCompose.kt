@@ -80,7 +80,9 @@ fun HomeScreen(viewModel: MyViewModel) {
     }
 
     selectedChatRoom?.let { chatRoomData ->
-        ChatRoomScreen(onEmployeeSelected = { /*TODO*/ }, //방안에서 직원 추가
+        ChatRoomScreen(
+            viewModel,
+            onEmployeeSelected = { /*TODO*/ }, //방안에서 직원 추가
             chatRoomData = chatRoomData,
             onClose = { selectedChatRoom = null }
         )
@@ -94,7 +96,9 @@ fun HomeScreen(viewModel: MyViewModel) {
     }
 
     if(showChatRoomScreen){
-        ChatRoomScreen(onEmployeeSelected = { /*TODO*/ }, //방안에서 직원 추가
+        ChatRoomScreen(
+            viewModel,
+            onEmployeeSelected = { /*TODO*/ }, //방안에서 직원 추가
             chatRoomData = ChatRoomData(
                 id = chatRoomData.size,
                 imageRes = R.drawable.profile,
