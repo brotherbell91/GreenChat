@@ -3,11 +3,12 @@ package com.greenchat
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.runtime.Composable
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.greenchat.compose.BackPressHandler
 import com.greenchat.compose.HomeScreen
 import com.greenchat.navigation.NavigationMain
+import com.greenchat.viewmodel.MyViewModel
 
 class MainActivity : ComponentActivity() {
 
@@ -21,8 +22,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
-            // login -> splash -> home
-            NavigationMain()
+            val viewModel: MyViewModel = viewModel()
+            NavigationMain(viewModel)
         }
     }
 }

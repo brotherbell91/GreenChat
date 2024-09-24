@@ -29,6 +29,7 @@ import com.greenchat.data.ChatRoomData
 import com.greenchat.data.EmployeeData
 import com.greenchat.data.MessageData
 import com.greenchat.ui.ghost_white
+import com.greenchat.viewmodel.MyViewModel
 
 sealed class Screen(val route: String) {
     object Permission : Screen("permission")
@@ -42,11 +43,11 @@ sealed class Screen(val route: String) {
 }
 
 @Composable
-fun NavigationMain() {
+fun NavigationMain(viewModel: MyViewModel) {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = Screen.Permission.route) {
-        composable(Screen.Permission.route) { PermissionScreen(navController) }
+        composable(Screen.Permission.route) { PermissionScreen(navController, viewModel) }
         composable(Screen.Login.route) { LoginScreen(navController) }
         composable(Screen.Splash.route) { SplashScreen(navController) }
         composable(Screen.Home.route) { HomeScreen() }

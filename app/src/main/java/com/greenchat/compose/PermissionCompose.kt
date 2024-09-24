@@ -21,6 +21,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -35,6 +37,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.greenchat.R
@@ -43,11 +46,12 @@ import com.greenchat.navigation.Screen
 import com.greenchat.ui.colorPrimary
 import com.greenchat.ui.dark_gray
 import com.greenchat.ui.ghost_white
+import com.greenchat.viewmodel.MyViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PermissionScreen(navController: NavController) {
+fun PermissionScreen(navController: NavController, viewModel: MyViewModel) {
     Surface(modifier = Modifier.fillMaxSize()) {
         Scaffold(
             topBar = {CustomTopAppBar(false, onClose = {})},
@@ -98,7 +102,7 @@ fun PermissionScreen(navController: NavController) {
                                 fontSize = 22.sp,
                             )
 
-                            PermissionItems()
+                            PermissionItems(viewModel)
                         }
 
                         Column(
@@ -130,13 +134,14 @@ fun PermissionScreen(navController: NavController) {
 }
 
 @Composable
-fun PermissionItems() {
+fun PermissionItems(viewModel: MyViewModel) {
+    val permissions by viewModel.permissionData.collectAsState()
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
     ) {
-        items(PermissionData.permissions.count()) { index ->
-            PermissionItem(PermissionData.permissions[index])
+        items(permissions.count()) { index ->
+            PermissionItem(permissions[index])
         }
     }
 }
@@ -179,5 +184,5 @@ fun PermissionItem(permission: PermissionData) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewPermissionScreen() {
-    PermissionScreen(navController = rememberNavController())
+    PermissionScreen(navController = rememberNavController(), viewModel = viewModel())
 }
