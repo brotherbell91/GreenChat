@@ -54,6 +54,7 @@ import com.greenchat.data.ChatRoomListData
 import com.greenchat.ui.colorPrimary
 import com.greenchat.ui.ghost_white
 import com.greenchat.ui.image_gray
+import com.greenchat.util.findChatRoomDataById
 import com.greenchat.viewmodel.MyViewModel
 
 @Composable
@@ -255,21 +256,4 @@ fun ChatRoomCard(onChatRoomSelected: (ChatRoomData) -> Unit, chatRoomListDataOne
 @Composable
 fun PreviewChatListScreen() {
     ChatRoomListScreen(onChatRoomSelected = {}, viewModel = viewModel())
-}
-
-private fun findChatRoomDataById(chatRooms: List<ChatRoomData>, id: Int): ChatRoomData? {
-    var low = 0
-    var high = chatRooms.size - 1
-
-    while (low <= high) {
-        val mid = (low + high) / 2
-        val midVal = chatRooms[mid]
-
-        when {
-            midVal.id < id -> low = mid + 1
-            midVal.id > id -> high = mid - 1
-            else -> return midVal
-        }
-    }
-    return null
 }

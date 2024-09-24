@@ -1,5 +1,6 @@
 package com.greenchat.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.greenchat.data.ChatData
@@ -13,6 +14,7 @@ import com.greenchat.data.PermissionData
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
 
 class MyViewModel : ViewModel() {
     private val _permissionData = MutableStateFlow<List<PermissionData>>(emptyList())
@@ -61,10 +63,64 @@ class MyViewModel : ViewModel() {
         }
     }
 
-    fun sendMessage(chatData: ChatData) {
+    fun sendMessage(content: String, id: Int, newChatRoomData: ChatRoomData) {
         viewModelScope.launch {
-            //임시
-//            _chatData.value += chatData
+            val existingChatRoomData = _chatRoomData.value.find { it.id == id }
+            if (existingChatRoomData == null) {
+                val newChatData = ChatData(
+                    id = 1,
+                    imageRes = myData.value!!.imageRes,
+                    name = myData.value!!.name,
+                    unreadCount = 1,
+                    time = LocalDateTime.now(),
+                    content  = content
+                )
+                val updatedNewChatRoomData = newChatRoomData.copy(chats = listOf(newChatData))
+                _chatRoomData.value += listOf(updatedNewChatRoomData)
+
+                val newChatRoomListData = ChatRoomListData(
+                    id = id,
+                    imageRes = newChatRoomData.imageRes,
+                    name = newChatRoomData.name,
+                    participantsCount = newChatRoomData.participantsCount,
+                    lastChatTime = LocalDateTime.now(),
+                    lastChat = content,
+                    unreadCount = 0
+                )
+                _chatRoomListData.value = listOf(newChatRoomListData) + _chatRoomListData.value
+
+            } else{
+                val updateChatRoomData = _chatRoomData.value.map { chatRoomData ->
+                    if(chatRoomData.id == id){
+                        val newChatData = ChatData(
+                            id = chatRoomData!!.chats.size + 1,
+                            imageRes = myData.value!!.imageRes,
+                            name = myData.value!!.name,
+                            unreadCount = 1,
+                            time = LocalDateTime.now(),
+                            content  = content
+                        )
+                        chatRoomData.copy(
+                            chats = chatRoomData.chats + newChatData
+                        )
+                    } else {
+                        chatRoomData
+                    }
+                }
+                _chatRoomData.value = updateChatRoomData
+                val updateChatRoomListData = _chatRoomListData.value.map { chatRoomListData ->
+                    if (chatRoomListData.id == id) {
+                        chatRoomListData.copy(
+                            lastChatTime = LocalDateTime.now(),
+                            lastChat = content,
+                            unreadCount = 0
+                        )
+                    } else {
+                        chatRoomListData
+                    }
+                }
+                _chatRoomListData.value = updateChatRoomListData
+            }
         }
     }
 

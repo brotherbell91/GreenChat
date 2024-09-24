@@ -62,13 +62,19 @@ import com.greenchat.ui.text_hint_color
 import com.greenchat.viewmodel.MyViewModel
 import java.time.format.DateTimeFormatter
 import java.util.Locale
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ChatRoomScreen(viewModel: MyViewModel, onEmployeeSelected: () -> Unit, chatRoomData : ChatRoomData, onClose: () -> Unit) {
+fun ChatRoomScreen(viewModel: MyViewModel, onEmployeeSelected: () -> Unit, selectedChatRoomData : ChatRoomData, onClose: () -> Unit) {
+    val chatRoomData by viewModel.chatRoomData.collectAsState()
+    val selectedChatRoomId = remember { mutableStateOf(selectedChatRoomData.id) }
+    val chatRoomDataOne = chatRoomData.find { it.id == selectedChatRoomId.value } ?: selectedChatRoomData
+
     Surface(modifier = Modifier.fillMaxSize()) {
         Scaffold(
-            topBar = { CustomTopAppBar(true, onClose, chatRoomData.name) },
+            topBar = { CustomTopAppBar(true, onClose, selectedChatRoomData.name) },
             content = { paddingValues ->
                 Surface(
                     modifier = Modifier
@@ -86,7 +92,7 @@ fun ChatRoomScreen(viewModel: MyViewModel, onEmployeeSelected: () -> Unit, chatR
                                 .padding(24.dp)
                                 .fillMaxSize(),
                         ) {
-                            items(chatRoomData.chats.sortedBy { it.time }) { chatData ->
+                            items(chatRoomDataOne.chats.sortedBy { it.time }) { chatData ->
                                 ChatMessageBubble(chatData = chatData)
                             }
                         }
@@ -108,6 +114,7 @@ fun ChatRoomScreen(viewModel: MyViewModel, onEmployeeSelected: () -> Unit, chatR
                             },
                             onSendMessage = { message ->
                                 // 메시지를 보낼 때 동작 추가
+                                viewModel.sendMessage(message, selectedChatRoomId.value, selectedChatRoomData)
                             }
                         )
                     }

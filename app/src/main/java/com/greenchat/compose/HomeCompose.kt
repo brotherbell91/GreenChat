@@ -1,6 +1,5 @@
 package com.greenchat.compose
 
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -81,9 +80,9 @@ fun HomeScreen(viewModel: MyViewModel) {
 
     selectedChatRoom?.let { chatRoomData ->
         ChatRoomScreen(
-            viewModel,
+            viewModel = viewModel,
             onEmployeeSelected = { /*TODO*/ }, //방안에서 직원 추가
-            chatRoomData = chatRoomData,
+            selectedChatRoomData = chatRoomData,
             onClose = { selectedChatRoom = null }
         )
     }
@@ -97,14 +96,14 @@ fun HomeScreen(viewModel: MyViewModel) {
 
     if(showChatRoomScreen){
         ChatRoomScreen(
-            viewModel,
+            viewModel = viewModel,
             onEmployeeSelected = { /*TODO*/ }, //방안에서 직원 추가
-            chatRoomData = ChatRoomData(
-                id = chatRoomData.size,
+            selectedChatRoomData = ChatRoomData(
+                id = chatRoomData.size+1,
                 imageRes = R.drawable.profile,
                 name = selectEmployeeList[0].name,
-                participantsCount = 1,
-                participants = selectEmployeeList,
+                participantsCount = 2,
+                participants = listOf(myData!!) + selectEmployeeList,
                 chats = emptyList()
             ),
             onClose = {
