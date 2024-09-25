@@ -67,10 +67,13 @@ import androidx.compose.runtime.getValue
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ChatRoomScreen(viewModel: MyViewModel, onEmployeeSelected: () -> Unit, selectedChatRoomData : ChatRoomData, onClose: () -> Unit) {
+fun ChatRoomScreen(viewModel: MyViewModel, onEmployeeSelected: () -> Unit, selectedChatRoomData : ChatRoomData, type: Int, onClose: () -> Unit) {
     val chatRoomData by viewModel.chatRoomData.collectAsState()
+    val openChatRoomData by viewModel.openChatRoomData.collectAsState()
     val selectedChatRoomId = remember { mutableStateOf(selectedChatRoomData.id) }
+    val selectedOpenChatRoomId = remember { mutableStateOf(selectedChatRoomData.id) }
     val chatRoomDataOne = chatRoomData.find { it.id == selectedChatRoomId.value } ?: selectedChatRoomData
+    val openChatRoomDataOne = openChatRoomData.find { it.id == selectedOpenChatRoomId.value } ?: selectedChatRoomData
 
     Surface(modifier = Modifier.fillMaxSize()) {
         Scaffold(
@@ -92,7 +95,8 @@ fun ChatRoomScreen(viewModel: MyViewModel, onEmployeeSelected: () -> Unit, selec
                                 .padding(24.dp)
                                 .fillMaxSize(),
                         ) {
-                            items(chatRoomDataOne.chats.sortedBy { it.time }) { chatData ->
+                            val chats = if (type == 0) chatRoomDataOne.chats else openChatRoomDataOne.chats
+                            items(chats.sortedBy { it.time }) { chatData ->
                                 ChatMessageBubble(chatData = chatData)
                             }
                         }
@@ -113,8 +117,7 @@ fun ChatRoomScreen(viewModel: MyViewModel, onEmployeeSelected: () -> Unit, selec
                                 // 추가 아이콘 클릭 시 동작 추가
                             },
                             onSendMessage = { message ->
-                                // 메시지를 보낼 때 동작 추가
-                                viewModel.sendMessage(message, selectedChatRoomId.value, selectedChatRoomData)
+                                viewModel.sendMessage(message, selectedChatRoomId.value, type, selectedChatRoomData)
                             }
                         )
                     }
@@ -314,5 +317,5 @@ fun ChatRoomCustomStyleTextField(
 @Preview(showBackground = true)
 @Composable
 fun PreviewChatRoomScreen() {
-    ChatRoomScreen(viewModel = viewModel(), onEmployeeSelected = {}, ChatRoomData.chatRoom[0], onClose = {})
+    ChatRoomScreen(viewModel = viewModel(), onEmployeeSelected = {}, ChatRoomData.chatRoom[0], 0,onClose = {})
 }

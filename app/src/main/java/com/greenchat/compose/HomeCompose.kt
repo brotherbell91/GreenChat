@@ -32,10 +32,11 @@ fun HomeScreen(viewModel: MyViewModel) {
     var selectedMessage by remember { mutableStateOf<MessageData?>(null) }
 
     var showSelectBuddyScreen by remember { mutableStateOf(false) }
-    var showChatRoomScreen by remember { mutableStateOf(false) } //아직
+    var showChatRoomScreen by remember { mutableStateOf(false) }
     var showMessageEditScreen by remember { mutableStateOf(false) }
 
     var selectBuddyScreenType by remember { mutableStateOf<SelectBuddyScreenType?>(null) }
+    var selectChatRoomType by remember { mutableStateOf(0)}
     var selectEmployeeList by remember { mutableStateOf<List<EmployeeData>>(emptyList())}
 
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -44,8 +45,9 @@ fun HomeScreen(viewModel: MyViewModel) {
             onEmployeeSelected = { employee ->
                 selectedEmployee = employee
             },
-            onChatRoomSelected = { chatRoom ->
+            onChatRoomSelected = { chatRoom, type ->
                 selectedChatRoom = chatRoom
+                selectChatRoomType = type
             },
             onMessageSelected = { message ->
                 selectedMessage = message
@@ -83,7 +85,11 @@ fun HomeScreen(viewModel: MyViewModel) {
             viewModel = viewModel,
             onEmployeeSelected = { /*TODO*/ }, //방안에서 직원 추가
             selectedChatRoomData = chatRoomData,
-            onClose = { selectedChatRoom = null }
+            type = selectChatRoomType,
+            onClose = {
+                selectedChatRoom = null
+                selectChatRoomType = 0
+            }
         )
     }
 
@@ -106,8 +112,10 @@ fun HomeScreen(viewModel: MyViewModel) {
                 participants = listOf(myData!!) + selectEmployeeList,
                 chats = emptyList()
             ),
+            type = selectChatRoomType,
             onClose = {
                 showChatRoomScreen = false
+                selectChatRoomType = 0
                 selectEmployeeList = emptyList()
             }
         )
@@ -169,6 +177,7 @@ fun HomeScreen(viewModel: MyViewModel) {
         if(showMessageEditScreen){
             showMessageEditScreen = false
             selectEmployeeList = emptyList()
+            selectChatRoomType = 0
             return true
         }
 
@@ -179,6 +188,7 @@ fun HomeScreen(viewModel: MyViewModel) {
 
         if(selectedChatRoom != null){
             selectedChatRoom = null
+            selectChatRoomType = 0
             return true
         }
 

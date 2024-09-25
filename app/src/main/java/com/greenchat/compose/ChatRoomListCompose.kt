@@ -58,7 +58,7 @@ import com.greenchat.util.findChatRoomDataById
 import com.greenchat.viewmodel.MyViewModel
 
 @Composable
-fun ChatRoomListScreen(onChatRoomSelected: (ChatRoomData) -> Unit, viewModel: MyViewModel) {
+fun ChatRoomListScreen(onChatRoomSelected: (ChatRoomData, Int) -> Unit, viewModel: MyViewModel) {
     val tabs = listOf("Chat", "OpenChat")
     var selectedTab = remember { mutableStateOf(0) }
     val chatRoomListData by viewModel.chatRoomListData.collectAsState()
@@ -128,7 +128,7 @@ fun ChatRoomListScreen(onChatRoomSelected: (ChatRoomData) -> Unit, viewModel: My
             }
         }
         Spacer(modifier = Modifier.height(8.dp))
-        ChatRoomList(onChatRoomSelected, selectedChatRoomListData, selectedChatRoomData)
+        ChatRoomList(onChatRoomSelected = { chatRoomData -> onChatRoomSelected(chatRoomData, selectedTab.value) }, selectedChatRoomListData, selectedChatRoomData)
     }
 }
 
@@ -255,5 +255,5 @@ fun ChatRoomCard(onChatRoomSelected: (ChatRoomData) -> Unit, chatRoomListDataOne
 @Preview(showBackground = true)
 @Composable
 fun PreviewChatListScreen() {
-    ChatRoomListScreen(onChatRoomSelected = {}, viewModel = viewModel())
+    ChatRoomListScreen(onChatRoomSelected = { _, _ -> }, viewModel = viewModel())
 }
