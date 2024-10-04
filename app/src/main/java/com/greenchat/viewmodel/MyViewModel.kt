@@ -140,4 +140,39 @@ class MyViewModel : ViewModel() {
         chatRoomListData.value = sortedListData
     }
 
+    fun sendMessage(content: String, id: Int, subject: String, toText: String, receiverCount: Int) {
+        viewModelScope.launch {
+            val existingMessageData = _sendMessageData.value.find { it.id == id }
+            if (existingMessageData == null) {
+                handleNewMessage(content, id, subject, toText, receiverCount)
+            }
+        }
+    }
+
+    private fun handleNewMessage(content: String, id: Int, subject: String, toText: String, receiverCount: Int) {
+        val newMessageData = MessageData(
+            id = id,
+            imageRes = myData.value!!.imageRes,
+            name = subject,
+            receiverCount = receiverCount,
+            time = LocalDateTime.now(),
+            sender  = myData.value!!.name,
+            receiver  = toText,
+            content  = content
+        )
+        _sendMessageData.value += listOf(newMessageData)
+
+        val newMessageListData = MessageListData(
+            id = id,
+            imageRes = newMessageData.imageRes,
+            name = newMessageData.name,
+            receiverCount = newMessageData.receiverCount,
+            time = newMessageData.time,
+            sender = newMessageData.sender,
+            receiver = newMessageData.receiver,
+            unread = 0
+        )
+        _sendMessageListData.value = listOf(newMessageListData) + _sendMessageListData.value
+    }
+
 }

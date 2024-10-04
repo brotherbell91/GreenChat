@@ -185,7 +185,7 @@ fun MessageScreen(messageData: MessageData, onClose: () -> Unit) {
                                 ) {
                                     item{
                                         Text(
-                                            text = "Hi HyeongJong Lee!!",
+                                            text = messageData.content,
                                             style = MaterialTheme.typography.bodyLarge.copy(
                                                 fontWeight = FontWeight.Medium,
                                                 fontSize = 16.sp

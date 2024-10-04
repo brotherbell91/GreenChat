@@ -48,13 +48,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextStyle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.greenchat.util.Constants
+import com.greenchat.viewmodel.MyViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MessageEditScreen(onEmployeeSelected: () -> Unit, employeeDataList: List<EmployeeData>, myData : EmployeeData, onClose: () -> Unit) {
-    val text = remember { mutableStateOf("") }
+fun MessageEditScreen(viewModel: MyViewModel, onEmployeeSelected: () -> Unit, employeeDataList: List<EmployeeData>, myData : EmployeeData, onClose: () -> Unit) {
+    val content = remember { mutableStateOf("") }
     val subject = remember { mutableStateOf("") }
+    val toText = remember(employeeDataList) {
+        employeeDataList.joinToString(", ") { it.name }
+    }
     Surface(modifier = Modifier.fillMaxSize()) {
         Scaffold(
             topBar = { CustomTopAppBar(true, onClose, Constants.SEND_MESSAGE_TITLE) },
@@ -130,14 +135,6 @@ fun MessageEditScreen(onEmployeeSelected: () -> Unit, employeeDataList: List<Emp
                                                                 fontSize = 16.sp
                                                             )
                                                         )
-                                                        var toText = ""
-                                                        for ((index, tempEmployeeData) in employeeDataList.withIndex()) {
-                                                            if (index == employeeDataList.size - 1) {
-                                                                toText = toText + tempEmployeeData.name
-                                                            } else{
-                                                                toText = toText + tempEmployeeData.name + ", "
-                                                            }
-                                                        }
                                                         Text(
                                                             text = toText,
                                                             style = MaterialTheme.typography.bodyLarge.copy(
@@ -215,8 +212,8 @@ fun MessageEditScreen(onEmployeeSelected: () -> Unit, employeeDataList: List<Emp
                                 ) {
                                     item{
                                         TextField(
-                                            value = text.value,
-                                            onValueChange = { text.value = it },
+                                            value = content.value,
+                                            onValueChange = { content.value = it },
                                             label = { Text("Enter your message", color = Color.Gray) },
                                             modifier = Modifier
                                                 .fillMaxSize()
@@ -232,7 +229,8 @@ fun MessageEditScreen(onEmployeeSelected: () -> Unit, employeeDataList: List<Emp
                                     }
                                 }
                                 FloatingButton(openDashboard = {
-
+                                    viewModel.sendMessage(content.value, viewModel.sendMessageData.value.size + 1, subject.value, toText, employeeDataList.size)
+                                    onClose()
                                 },
                                     image = R.drawable.chat_send)
                             }
@@ -247,5 +245,5 @@ fun MessageEditScreen(onEmployeeSelected: () -> Unit, employeeDataList: List<Emp
 @Preview(showBackground = true)
 @Composable
 fun PreviewMessageEditCompose() {
-    MessageEditScreen(onEmployeeSelected = {}, EmployeeData.employeeDataList, EmployeeData.myData, onClose = {})
+    MessageEditScreen(viewModel = viewModel(), onEmployeeSelected = {}, EmployeeData.employeeDataList, EmployeeData.myData, onClose = {})
 }

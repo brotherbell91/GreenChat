@@ -122,7 +122,9 @@ fun HomeScreen(viewModel: MyViewModel) {
     }
 
     if(showMessageEditScreen){
-        MessageEditScreen(onEmployeeSelected = { showSelectBuddyScreen = true },
+        MessageEditScreen(
+            viewModel = viewModel,
+            onEmployeeSelected = { showSelectBuddyScreen = true },
             employeeDataList = selectEmployeeList,
             myData = myData!!,
             onClose = {
