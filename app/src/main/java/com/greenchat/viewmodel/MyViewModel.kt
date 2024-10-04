@@ -141,12 +141,4 @@ class MyViewModel : ViewModel() {
         chatRoomListData.value = sortedListData
     }
 
-    fun clearMessages() {
-        viewModelScope.launch {
-            //임시
-//            _chatData.value = emptyList()
-//            _chatRoomData.value = emptyList()
-        }
-    }
-
 }
