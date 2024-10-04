@@ -12,5 +12,6 @@ import com.greenchat.viewmodel.MyViewModel
 fun MoreScreen(viewModel: MyViewModel) {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Text("More Screen")
+        //임시 데이터 구성 예정
     }
 }
