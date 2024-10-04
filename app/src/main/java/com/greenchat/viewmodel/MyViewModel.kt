@@ -1,6 +1,5 @@
 package com.greenchat.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.greenchat.data.ChatData
