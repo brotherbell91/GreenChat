@@ -91,6 +91,7 @@ fun HomeScreen(viewModel: MyViewModel) {
                 selectChatRoomType = 0
             }
         )
+        viewModel.deleteUnreadCountChat(chatRoomData.id, selectChatRoomType)
     }
 
     selectedMessage?.let { messageData ->

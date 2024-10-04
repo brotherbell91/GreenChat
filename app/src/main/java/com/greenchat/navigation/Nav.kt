@@ -13,7 +13,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.greenchat.compose.ChatRoomListScreen
-import com.greenchat.compose.ChatRoomScreen
 import com.greenchat.compose.CustomBottomBar
 import com.greenchat.compose.CustomTopAppBar
 import com.greenchat.compose.FloatingButton

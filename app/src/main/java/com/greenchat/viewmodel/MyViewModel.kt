@@ -12,6 +12,7 @@ import com.greenchat.data.MessageListData
 import com.greenchat.data.PermissionData
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 
@@ -170,9 +171,26 @@ class MyViewModel : ViewModel() {
             time = newMessageData.time,
             sender = newMessageData.sender,
             receiver = newMessageData.receiver,
-            unread = 0
+            unreadCount = 0
         )
         _sendMessageListData.value = listOf(newMessageListData) + _sendMessageListData.value
     }
 
+    fun deleteUnreadCountChat(id: Int, type: Int){
+        val anyChatRoomListData = if (type == 0) _chatRoomListData else _openChatRoomListData
+        anyChatRoomListData.update { list ->
+            list.map { item ->
+                if (item.id == id) item.copy(unreadCount = 0) else item
+            }
+        }
+    }
+
+//    fun deleteUnreadCountMessage(id: Int, type: Int){
+//        val anyMessageListData = if (type == 0) _receiveMessageListData else _sendMessageListData
+//        anyMessageListData.update { list ->
+//            list.map { item ->
+//                if (item.id == id) item.copy(unreadCount = 0) else item
+//            }
+//        }
+//    }
 }

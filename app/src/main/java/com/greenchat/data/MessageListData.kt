@@ -14,7 +14,7 @@ data class MessageListData(
     var time: LocalDateTime = LocalDateTime.now(),
     var sender: String = "",
     var receiver: String = "",
-    var unread: Int = -1,
+    var unreadCount: Int = -1,
 ) : Parcelable  {
     companion object{
         val receiveMessages = listOf(

@@ -223,7 +223,7 @@ fun MessageCard(onMessageSelected: (MessageData) -> Unit, messageListData: Messa
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.Bottom,
                 ) {
-                    if (messageListData.unread > 0) {
+                    if (messageListData.unreadCount > 0) {
                         Box(
                             modifier = Modifier
                                 .size(20.dp)
