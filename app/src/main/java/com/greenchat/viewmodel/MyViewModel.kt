@@ -185,12 +185,13 @@ class MyViewModel : ViewModel() {
         }
     }
 
-//    fun deleteUnreadCountMessage(id: Int, type: Int){
-//        val anyMessageListData = if (type == 0) _receiveMessageListData else _sendMessageListData
-//        anyMessageListData.update { list ->
-//            list.map { item ->
-//                if (item.id == id) item.copy(unreadCount = 0) else item
-//            }
-//        }
-//    }
+    fun deleteUnreadCountMessage(id: Int, type: Int){
+        if(type == 0){
+            _receiveMessageListData.update { list ->
+                list.map { item ->
+                    if (item.id == id) item.copy(unreadCount = 0) else item
+                }
+            }
+        }
+    }
 }

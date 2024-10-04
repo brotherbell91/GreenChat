@@ -58,7 +58,7 @@ import com.greenchat.ui.image_gray
 import com.greenchat.viewmodel.MyViewModel
 
 @Composable
-fun MessageListScreen(onMessageSelected: (MessageData) -> Unit, viewModel: MyViewModel) {
+fun MessageListScreen(onMessageSelected: (MessageData, Int) -> Unit, viewModel: MyViewModel) {
     val tabs = listOf("ReceiveMessage", "SendMessage")
     var selectedTab = remember { mutableStateOf(0) }
     val receiveMessageListData by viewModel.receiveMessageListData.collectAsState()
@@ -128,7 +128,7 @@ fun MessageListScreen(onMessageSelected: (MessageData) -> Unit, viewModel: MyVie
             }
         }
         Spacer(modifier = Modifier.height(8.dp))
-        MessageList(onMessageSelected, selectedMessageListData, selectedMessageData, selectedTab.value)
+        MessageList(onMessageSelected = { messageDataData -> onMessageSelected(messageDataData, selectedTab.value) }, selectedMessageListData, selectedMessageData, selectedTab.value)
     }
 }
 
@@ -262,7 +262,7 @@ fun MessageCard(onMessageSelected: (MessageData) -> Unit, messageListData: Messa
 @Preview(showBackground = true)
 @Composable
 fun PreviewMessageListScreen() {
-    MessageListScreen(onMessageSelected = {}, viewModel = viewModel())
+    MessageListScreen(onMessageSelected = { _, _ -> }, viewModel = viewModel())
 }
 
 private fun findMessageDataById(messages: List<MessageData>, id: Int): MessageData? {

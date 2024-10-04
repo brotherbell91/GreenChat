@@ -58,7 +58,7 @@ fun NavigationHome(
     viewModel: MyViewModel,
     onEmployeeSelected: (EmployeeData) -> Unit,
     onChatRoomSelected: (ChatRoomData, Int) -> Unit,
-    onMessageSelected: (MessageData) -> Unit,
+    onMessageSelected: (MessageData, Int) -> Unit,
     onFloatingChatRoomSelected: () -> Unit,
     onFloatingMessageSelected: () -> Unit,
 ) {

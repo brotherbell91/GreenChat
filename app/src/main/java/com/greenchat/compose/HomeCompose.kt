@@ -37,6 +37,7 @@ fun HomeScreen(viewModel: MyViewModel) {
 
     var selectBuddyScreenType by remember { mutableStateOf<SelectBuddyScreenType?>(null) }
     var selectChatRoomType by remember { mutableStateOf(0)}
+    var selectMessageType by remember { mutableStateOf(0)}
     var selectEmployeeList by remember { mutableStateOf<List<EmployeeData>>(emptyList())}
 
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -49,8 +50,9 @@ fun HomeScreen(viewModel: MyViewModel) {
                 selectedChatRoom = chatRoom
                 selectChatRoomType = type
             },
-            onMessageSelected = { message ->
+            onMessageSelected = { message, type ->
                 selectedMessage = message
+                selectMessageType = type
             },
             onFloatingChatRoomSelected = {
                 selectBuddyScreenType = SelectBuddyScreenType.CHAT_ROOM
@@ -99,6 +101,7 @@ fun HomeScreen(viewModel: MyViewModel) {
             messageData = messageData,
             onClose = { selectedMessage = null }
         )
+        viewModel.deleteUnreadCountMessage(messageData.id, selectMessageType)
     }
 
     if(showChatRoomScreen){
@@ -180,7 +183,6 @@ fun HomeScreen(viewModel: MyViewModel) {
         if(showMessageEditScreen){
             showMessageEditScreen = false
             selectEmployeeList = emptyList()
-            selectChatRoomType = 0
             return true
         }
 
@@ -197,6 +199,7 @@ fun HomeScreen(viewModel: MyViewModel) {
 
         if(selectedMessage != null){
             selectedMessage = null
+            selectMessageType = 0
             return true
         }
 
