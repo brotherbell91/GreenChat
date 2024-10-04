@@ -116,8 +116,8 @@ fun ChatRoomScreen(viewModel: MyViewModel, onEmployeeSelected: () -> Unit, selec
                             onIconClick = {
                                 // 추가 아이콘 클릭 시 동작 추가
                             },
-                            onSendMessage = { message ->
-                                viewModel.sendMessage(message, selectedChatRoomId.value, type, selectedChatRoomData)
+                            onSendChat = { message ->
+                                viewModel.sendChat(message, selectedChatRoomId.value, type, selectedChatRoomData)
                             }
                         )
                     }
@@ -237,7 +237,7 @@ fun ChatRoomCustomStyleTextField(
     keyboardType: KeyboardType,
     visualTransformation: VisualTransformation,
     onIconClick: () -> Unit,
-    onSendMessage: (String) -> Unit
+    onSendChat: (String) -> Unit
 ) {
     val textState = remember { mutableStateOf(TextFieldValue()) }
 
@@ -291,7 +291,7 @@ fun ChatRoomCustomStyleTextField(
                         .padding(end = 8.dp)
                         .size(23.dp)
                         .clickable {
-                            onSendMessage(textState.value.text)
+                            onSendChat(textState.value.text)
                             textState.value = TextFieldValue() //채팅 메시지 초기화
                         },
                     bitmap = ImageBitmap.imageResource(id = sendIconId),

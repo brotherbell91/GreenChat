@@ -62,7 +62,7 @@ class MyViewModel : ViewModel() {
         }
     }
 
-    fun sendMessage(content: String, id: Int, type: Int,newChatRoomData: ChatRoomData) {
+    fun sendChat(content: String, id: Int, type: Int, newChatRoomData: ChatRoomData) {
         viewModelScope.launch {
             val existingChatRoomData = _chatRoomData.value.find { it.id == id }
             if (existingChatRoomData == null) {
