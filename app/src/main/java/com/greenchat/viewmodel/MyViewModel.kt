@@ -43,10 +43,10 @@ class MyViewModel : ViewModel() {
     val sendMessageListData = _sendMessageListData.asStateFlow()
 
     init {
-        loadMessages()
+        loadData()
     }
 
-    private fun loadMessages() {
+    private fun loadData() {
         viewModelScope.launch {
             _permissionData.value = PermissionData.permissions
             _myData.value = EmployeeData.myData
