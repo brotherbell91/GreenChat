@@ -14,7 +14,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onBackPressed() {
         if(!BackPressHandler.closeUseBackPress()){
-            finishAffinity() //종료하시겠습니까? 얼럿 필요
+            finishAffinity()
         }
     }
 
