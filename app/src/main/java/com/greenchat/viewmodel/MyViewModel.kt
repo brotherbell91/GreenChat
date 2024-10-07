@@ -9,6 +9,7 @@ import com.greenchat.data.DepartmentData
 import com.greenchat.data.EmployeeData
 import com.greenchat.data.MessageData
 import com.greenchat.data.MessageListData
+import com.greenchat.data.MoreData
 import com.greenchat.data.PermissionData
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -41,6 +42,8 @@ class MyViewModel : ViewModel() {
     val receiveMessageListData = _receiveMessageListData.asStateFlow()
     private val _sendMessageListData = MutableStateFlow<List<MessageListData>>(emptyList())
     val sendMessageListData = _sendMessageListData.asStateFlow()
+    private val _moreData = MutableStateFlow<List<MoreData>>(emptyList())
+    val moreData = _moreData.asStateFlow()
 
     init {
         loadData()
@@ -60,6 +63,7 @@ class MyViewModel : ViewModel() {
             _sendMessageData.value = MessageData.sendMessage
             _receiveMessageListData.value = MessageListData.receiveMessages
             _sendMessageListData.value = MessageListData.sendMessages
+            _moreData.value = MoreData.mores
         }
     }
 
@@ -190,6 +194,16 @@ class MyViewModel : ViewModel() {
             _receiveMessageListData.update { list ->
                 list.map { item ->
                     if (item.id == id) item.copy(unreadCount = 0) else item
+                }
+            }
+        }
+    }
+
+    fun changeMoreDataBoolean(id: Int, type: Int){
+        if(type == 2 || type == 3){
+            _moreData.update { list ->
+                list.map { item ->
+                    if (item.id == id) item.copy(data = (!item.data.toBoolean()).toString()) else item
                 }
             }
         }
