@@ -149,7 +149,7 @@ fun ChatRoomCard(onChatRoomSelected: (ChatRoomData) -> Unit, chatRoomListDataOne
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(6.dp)
+            .padding(horizontal = 6.dp, vertical = 2.dp)
             .clickable {
                 onChatRoomSelected(
                     findChatRoomDataById(

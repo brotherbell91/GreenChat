@@ -149,7 +149,7 @@ fun MessageCard(onMessageSelected: (MessageData) -> Unit, messageListData: Messa
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(6.dp)
+            .padding(horizontal = 6.dp, vertical = 2.dp)
             .clickable {onMessageSelected(findMessageDataById(messageData, messageListData.id)!!)},
         elevation = CardDefaults.cardElevation(4.dp),
         colors = CardDefaults.cardColors(Color.White),
