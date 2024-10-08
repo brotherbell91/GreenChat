@@ -36,6 +36,7 @@ import com.greenchat.data.MessageData
 import com.greenchat.ui.colorPrimary
 import com.greenchat.ui.ghost_white
 import com.greenchat.util.Constants
+import com.greenchat.util.getLoginPass
 import com.greenchat.util.getPermissionPass
 import com.greenchat.viewmodel.MyViewModel
 
@@ -55,7 +56,19 @@ fun NavigationMain(viewModel: MyViewModel) {
     val context = LocalContext.current
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = if(getPermissionPass(context, Constants.PERMISSION_PASS_SHARED_PREFERENCE)) Screen.Login.route else Screen.Permission.route) {
+    NavHost(
+        navController = navController,
+        startDestination =
+        if(getPermissionPass(context, Constants.PERMISSION_PASS_SHARED_PREFERENCE)){
+            if(getLoginPass(context, Constants.LOGIN_PASS_SHARED_PREFERENCE)){
+                Screen.Splash.route
+            } else{
+                Screen.Login.route
+            }
+        } else{
+            Screen.Permission.route
+        }
+    ) {
         composable(Screen.Permission.route) { PermissionScreen(navController, viewModel) }
         composable(Screen.Login.route) { LoginScreen(navController) }
         composable(Screen.Splash.route) { SplashScreen(navController) }

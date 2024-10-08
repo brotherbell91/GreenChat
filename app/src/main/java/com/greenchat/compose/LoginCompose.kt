@@ -3,6 +3,7 @@ package com.greenchat.compose
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,12 +20,15 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -34,6 +38,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
@@ -58,10 +63,20 @@ import com.greenchat.ui.colorPrimary
 import com.greenchat.ui.dark_gray
 import com.greenchat.ui.ghost_white
 import com.greenchat.ui.gray
+import com.greenchat.ui.image_gray
 import com.greenchat.ui.light_gray
+import com.greenchat.util.Constants
+import com.greenchat.util.setIdPass
+import com.greenchat.util.setLoginPass
+import com.greenchat.util.setPwPass
 
 @Composable
 fun LoginScreen(navController: NavController) {
+    val context = LocalContext.current
+    val idState = remember { mutableStateOf(TextFieldValue()) }
+    val pwState = remember { mutableStateOf(TextFieldValue()) }
+    val autoLogin = remember { mutableStateOf(false) }
+
     JetPackComposeTheme {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
@@ -142,7 +157,8 @@ fun LoginScreen(navController: NavController) {
                                 "Email Address",
                                 R.drawable.ic_email,
                                 KeyboardType.Email,
-                                VisualTransformation.None
+                                VisualTransformation.None,
+                                idState
                             )
 
                             Text(
@@ -154,19 +170,50 @@ fun LoginScreen(navController: NavController) {
                                 "Password",
                                 R.drawable.ic_password,
                                 KeyboardType.Password,
-                                PasswordVisualTransformation()
+                                PasswordVisualTransformation(),
+                                pwState
                             )
 
-                            Text(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(top = 10.dp),
-                                text = "Forgot Password",
-                                textAlign = TextAlign.End,
-                                style = MaterialTheme.typography.titleSmall.copy(color = colorPrimary)
-                            )
+                            Row(
+                                horizontalArrangement = Arrangement.End,
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = Modifier.padding(top = 10.dp).fillMaxWidth()
+                            ) {
+                                Checkbox(
+                                    checked = autoLogin.value,
+                                    onCheckedChange = { checked ->
+                                        autoLogin.value = checked
+                                    },
+                                    colors = CheckboxDefaults.colors(
+                                        checkedColor = colorPrimary,
+                                        uncheckedColor = image_gray,
+                                        checkmarkColor = Color.White
+                                    ),
+                                    modifier = Modifier.size(10.dp)
+                                )
+
+                                Text(
+                                    modifier = Modifier
+                                        .padding(start = 8.dp, end = 3.dp),
+                                    text = "Auto Login",
+                                    style = MaterialTheme.typography.titleSmall.copy(color = colorPrimary)
+                                )
+                            }
+
                             Button(
-                                onClick = {navController.navigate(Screen.Splash.route)},
+                                onClick = {
+                                    if(idState.value.text != "" &&  pwState.value.text != ""){
+                                        setIdPass(context, Constants.ID_PASS_SHARED_PREFERENCE, idState.value.text)
+                                        setPwPass(context, Constants.PW_PASS_SHARED_PREFERENCE, pwState.value.text)
+
+                                        if(autoLogin.value){
+                                            setLoginPass(context, Constants.LOGIN_PASS_SHARED_PREFERENCE)
+
+                                        }
+                                    }
+
+                                    navController.navigate(Screen.Splash.route)
+                                          },
                                 modifier = Modifier
                                     .padding(top = 30.dp, bottom = 34.dp)
                                     .align(Alignment.CenterHorizontally)
@@ -225,10 +272,9 @@ fun LoginCustomStyleTextField(
     placeHolder: String,
     leadingIconId: Int,
     keyboardType: KeyboardType,
-    visualTransformation: VisualTransformation
+    visualTransformation: VisualTransformation,
+    textState: MutableState<TextFieldValue>
 ) {
-    val textState = remember { mutableStateOf(TextFieldValue()) }
-
     OutlinedTextField(
         modifier = Modifier
             .fillMaxSize()
@@ -255,7 +301,6 @@ fun LoginCustomStyleTextField(
                     Canvas(
                         modifier = Modifier.height(24.dp)
                     ) {
-                        // Allows you to draw a line between two points (p1 & p2) on the canvas.
                         drawLine(
                             color = Color.LightGray,
                             start = Offset(0f, 0f),
