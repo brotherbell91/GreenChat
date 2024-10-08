@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
-            val viewModel: MyViewModel = viewModel()
+            val viewModel = MyViewModel()
             NavigationMain(viewModel)
         }
     }
