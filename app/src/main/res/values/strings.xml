@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">GreenChat</string>
+
+    <!-- Permission Alert -->
+    <string name="permission_alert_title">Permission required</string>
+    <string name="permission_alert_description">The app requires these permissions to function properly. Please allow them in the app settings.</string>
+    <string name="permission_alert_open_settings">Open Settings</string>
+    <string name="permission_alert_cancel">Cancel</string>
 </resources>
