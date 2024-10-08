@@ -12,7 +12,7 @@ data class DepartmentData(
         val organizationDepartment = DepartmentData(
             name = "GreenChat",
             employees = listOf(
-                EmployeeData(id = "green@green.com", name = "Green", position = "CEO", phone = "010-0000-0000", imageRes = R.drawable.profile, department= "GreenChat"),
+                EmployeeData(id = "green@green.com", name = "Green", position = "CEO", phone = "010-1234-5678", imageRes = R.drawable.profile, department= "GreenChat"),
             ),
             subDepartments = listOf(
                 DepartmentData(
