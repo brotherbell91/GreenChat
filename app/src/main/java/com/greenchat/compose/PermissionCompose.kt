@@ -39,6 +39,8 @@ import com.greenchat.ui.colorPrimary
 import com.greenchat.ui.dark_gray
 import com.greenchat.ui.ghost_white
 import com.greenchat.ui.image_gray
+import com.greenchat.util.Constants
+import com.greenchat.util.setPermissionPass
 import com.greenchat.viewmodel.MyViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -64,6 +66,7 @@ fun PermissionScreen(navController: NavController, viewModel: MyViewModel) {
     LaunchedEffect(permissionsState.allPermissionsGranted) {
         if (permissionsState.allPermissionsGranted) {
             navController.navigate(Screen.Login.route)
+            setPermissionPass(context, Constants.PERMISSION_PASS_SHARED_PREFERENCE)
         }
     }
 

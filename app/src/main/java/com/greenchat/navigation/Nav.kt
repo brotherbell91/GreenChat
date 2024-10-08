@@ -14,6 +14,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -34,6 +35,8 @@ import com.greenchat.data.EmployeeData
 import com.greenchat.data.MessageData
 import com.greenchat.ui.colorPrimary
 import com.greenchat.ui.ghost_white
+import com.greenchat.util.Constants
+import com.greenchat.util.getPermissionPass
 import com.greenchat.viewmodel.MyViewModel
 
 sealed class Screen(val route: String) {
@@ -49,9 +52,10 @@ sealed class Screen(val route: String) {
 
 @Composable
 fun NavigationMain(viewModel: MyViewModel) {
+    val context = LocalContext.current
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = Screen.Permission.route) {
+    NavHost(navController = navController, startDestination = if(getPermissionPass(context, Constants.PERMISSION_PASS_SHARED_PREFERENCE)) Screen.Login.route else Screen.Permission.route) {
         composable(Screen.Permission.route) { PermissionScreen(navController, viewModel) }
         composable(Screen.Login.route) { LoginScreen(navController) }
         composable(Screen.Splash.route) { SplashScreen(navController) }
