@@ -208,7 +208,6 @@ fun LoginScreen(navController: NavController) {
 
                                         if(autoLogin.value){
                                             setLoginPass(context, Constants.LOGIN_PASS_SHARED_PREFERENCE)
-
                                         }
                                     }
 
