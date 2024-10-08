@@ -94,4 +94,7 @@ dependencies {
     kapt("androidx.room:room-compiler:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
 
+    // Permission
+    implementation("com.google.accompanist:accompanist-permissions:0.31.1-alpha")
+
 }
