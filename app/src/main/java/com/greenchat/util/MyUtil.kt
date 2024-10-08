@@ -1,5 +1,8 @@
 package com.greenchat.util
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import com.greenchat.data.ChatRoomData
 import com.greenchat.data.ChatRoomListData
 
@@ -35,4 +38,10 @@ fun findChatRoomListDataById(chatRooms: List<ChatRoomListData>, id: Int): ChatRo
         }
     }
     return null
+}
+
+fun dialPhoneNumber(context: Context, phoneNumber: String) {
+    val intent = Intent(Intent.ACTION_DIAL)
+    intent.data = Uri.parse("tel:$phoneNumber")
+    context.startActivity(intent)
 }

@@ -44,7 +44,7 @@ import com.greenchat.ui.ghost_white
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfileScreen(onProfileChatRoomSelected: () -> Unit, onProfileMessageSelected: () -> Unit ,employeeData : EmployeeData, onClose: () -> Unit) {
+fun ProfileScreen(onProfileChatRoomSelected: () -> Unit, onProfileMessageSelected: () -> Unit, onProfileCallSelected: () -> Unit, employeeData : EmployeeData, onClose: () -> Unit) {
     Surface(modifier = Modifier.fillMaxSize()) {
         Scaffold(
             topBar = { CustomTopAppBar(true, onClose, employeeData.name) },
@@ -113,7 +113,7 @@ fun ProfileScreen(onProfileChatRoomSelected: () -> Unit, onProfileMessageSelecte
                                 Image(
                                     modifier = Modifier
                                         .size(45.dp)
-                                        .clickable { }
+                                        .clickable { onProfileCallSelected() }
                                         .clip((CircleShape)),
                                     bitmap = ImageBitmap.imageResource(id = R.drawable.phone),
                                     contentScale = ContentScale.Crop,
@@ -194,7 +194,7 @@ fun ProfileItem(itemTitle: String, itemValue: String) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewProfileScreen() {
-    ProfileScreen(onProfileChatRoomSelected = {}, onProfileMessageSelected = {}, DepartmentData.organizationDepartment.employees.get(0), onClose = {})
+    ProfileScreen(onProfileChatRoomSelected = {}, onProfileMessageSelected = {}, onProfileCallSelected = {}, DepartmentData.organizationDepartment.employees.get(0), onClose = {})
 }
 
 @Preview(showBackground = true)

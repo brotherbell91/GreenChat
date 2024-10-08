@@ -7,11 +7,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.runtime.*
+import androidx.compose.ui.platform.LocalContext
 import com.greenchat.R
 import com.greenchat.data.ChatRoomData
 import com.greenchat.data.EmployeeData
 import com.greenchat.data.MessageData
 import com.greenchat.navigation.NavigationHome
+import com.greenchat.util.dialPhoneNumber
 import com.greenchat.viewmodel.MyViewModel
 
 enum class SelectBuddyScreenType {
@@ -24,6 +26,8 @@ object BackPressHandler {
 
 @Composable
 fun HomeScreen(viewModel: MyViewModel) {
+    val context = LocalContext.current
+
     val myData by viewModel.myData.collectAsState()
     val chatRoomData by viewModel.chatRoomData.collectAsState()
 
@@ -76,6 +80,9 @@ fun HomeScreen(viewModel: MyViewModel) {
                 selectEmployeeList += employeeData
                 showMessageEditScreen = true
                 selectedEmployee = null
+            },
+            onProfileCallSelected = {
+                dialPhoneNumber(context, employeeData.phone)
             },
             employeeData = employeeData,
             onClose = { selectedEmployee = null }
