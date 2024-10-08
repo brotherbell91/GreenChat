@@ -1,5 +1,6 @@
 package com.greenchat.viewmodel
 
+import android.os.Build
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.greenchat.data.ChatData
@@ -47,6 +48,7 @@ class MyViewModel : ViewModel() {
 
     init {
         loadData()
+        checkPermissionSDK()
     }
 
     private fun loadData() {
@@ -207,5 +209,48 @@ class MyViewModel : ViewModel() {
                 }
             }
         }
+    }
+
+    fun checkPermissionSDK() {
+        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.TIRAMISU){
+            val updatedPermissions = permissionData.value.toMutableList()
+
+            val permissionsToRemove = listOf(
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                android.Manifest.permission.READ_EXTERNAL_STORAGE,
+            )
+
+            updatedPermissions.removeAll { permissionData ->
+                permissionData.permission in permissionsToRemove
+            }
+
+            _permissionData.value = updatedPermissions
+        } else if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.TIRAMISU){
+            val updatedPermissions = permissionData.value.toMutableList()
+
+            val permissionsToRemove = listOf(
+                android.Manifest.permission.READ_MEDIA_IMAGES,
+                android.Manifest.permission.READ_MEDIA_VIDEO,
+                android.Manifest.permission.READ_MEDIA_AUDIO
+            )
+
+            updatedPermissions.removeAll { permissionData ->
+                permissionData.permission in permissionsToRemove
+            }
+
+            _permissionData.value = updatedPermissions
+        }
+    }
+
+    fun updatePermissionState(permission: String) {
+        _permissionData.update { list ->
+            list.map { item ->
+                if (item.permission == permission) item.copy(state = (!item.state)) else item
+            }
+        }
+    }
+
+    fun allPermissionGranted(): Boolean {
+        return _permissionData.value.all { it.state }
     }
 }
